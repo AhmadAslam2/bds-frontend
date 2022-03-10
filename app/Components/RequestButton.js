@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import { Icon, Overlay, Input } from 'react-native-elements';
 import { Formik } from 'formik';
+import { Picker } from 'react-native-woodpicker'
 
 import colors from '../config/colors'
 
@@ -10,8 +11,17 @@ export default function RequestButton({ setLoading }) {
     const toggleOverlay = () => {
         setVisible(!visible);
     };
-
-
+    const [pickedData, setPickedData] = useState("A+");
+    const data = [
+        { label: "A+", value: "A+", },
+        { label: "A-", value: "A-", },
+        { label: "B+", value: "B+", },
+        { label: "B-", value: "B-", },
+        { label: "O+", value: "O+", },
+        { label: "O-", value: "O-", },
+        { label: "AB+", value: "AB+", },
+        { label: "AB-", value: "AB-", },
+    ]
     return (
         <TouchableOpacity style={styles.requestBoton}>
             <TouchableOpacity style={{ width: '100%', height: '100%' }} onPress={toggleOverlay} >
@@ -26,14 +36,16 @@ export default function RequestButton({ setLoading }) {
                         description: "",
                         amount: "",
                         type: "",
-                        diagnosis: ""
+                        diagnosis: "",
+                        bloodType: ""
                     }}
                     onSubmit={values => {
+                        // console.log("values:::::", values)
                         setLoading && setLoading(true)
                         global.requestList = [{
                             donorName: "Ahmad Aslam",
                             location: values.location,
-                            bloodType: values.type,
+                            bloodType: values.bloodType,
                             amountFilled: "0",
                             amountNeeded: values.amount,
                             description: values.description,
@@ -43,9 +55,9 @@ export default function RequestButton({ setLoading }) {
                         toggleOverlay()
                     }}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
                         <View style={styles.Overlay}>
-                            <Input placeholder="Location"
+                            <Input placeholder="Location*"
                                 onChangeText={handleChange('location')}
                                 onBlur={handleBlur('location')}
                                 value={values.location}
@@ -55,29 +67,37 @@ export default function RequestButton({ setLoading }) {
 
                             <Text style={{ fontSize: 18, fontWeight: '600' }}>Choose Amount and Type</Text>
                             <View style={styles.amountAndTypeContainer}>
-                                <View style={{ width: 85 }}>
+                                <View style={{ width: 100 }}>
                                     <Input placeholder="Amount"
                                         onChangeText={handleChange('amount')}
                                         onBlur={handleBlur('amount')}
                                         value={values.amount} style={styles.amount}
                                         autoCorrect={false}
+                                        containerStyle={{ marginBottom: 0 }}
                                     />
                                 </View>
                                 <View style={{ width: 85 }}>
-                                    <Input
-                                        onChangeText={handleChange('type')}
-                                        onBlur={handleBlur('type')}
-                                        value={values.type}
-                                        placeholder="Type" style={styles.amount}
-                                        autoCorrect={false}
+                                    <Picker
+                                        item={pickedData}
+                                        items={data}
+                                        onItemChange={(item) => {
+                                            // console.log("value", item?.value)
+                                            setFieldValue("bloodType", item?.value)
+                                        }}
+                                        title="Select Blood Group"
+                                        doneButtonLabel='Confirm'
+                                        placeholder="Blood Group"
+                                        textInputStyle={{ color: "#7D859D", alignSelf: "center" }}
 
+                                        containerStyle={{ height: 42, borderBottomWidth: 0.8, borderColor: "#7D859D", justifyContent: 'center' }}
+                                        isNullable={false}
                                     />
                                 </View>
                             </View>
                             <Input
                                 onChangeText={handleChange('diagnosis')}
                                 onBlur={handleBlur('diagnosis')}
-                                value={values.diagnosis} placeholder="Diagnosis(required)"
+                                value={values.diagnosis} placeholder="Diagnosis*"
                                 autoCorrect={false}
                             />
                             <Input onChangeText={handleChange('description')}
@@ -102,9 +122,11 @@ const styles = StyleSheet.create({
     amount: {
         height: 25,
         width: 50,
+        textAlign: "center"
     },
     amountAndTypeContainer: {
         flexDirection: "row",
+
 
     },
     button: {

@@ -9,10 +9,7 @@ import RequestButton from './RequestButton';
 
 
 export default function menuBar({ navigation, setLoading, }) {
-    // const [color, SetColor] = useState('grey')
-    // const toggleColor = () => {
-    //     SetColor('blue')
-    // }
+
     return (
         <View style={styles.menuBar}>
             <View style={styles.div1}>

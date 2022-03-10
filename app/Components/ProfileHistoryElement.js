@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react'
 import { StyleSheet, Text, View, } from 'react-native'
 import { Icon } from 'react-native-elements';
@@ -9,10 +10,10 @@ export default function ProfileHistoryElement({ data }) {
         <View style={styles.element}>
             <View style={styles.dateContainer}>
                 <Text style={styles.month}>
-                    Nov
+                    {moment(data?.date).format('MMM')}
                 </Text>
                 <Text style={styles.date}>
-                    {data?.date.toString()}
+                    {moment(data?.date).format('DD')}
                 </Text>
             </View>
             <View>
@@ -23,7 +24,7 @@ export default function ProfileHistoryElement({ data }) {
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Icon name="blood-drop" type="fontisto" color={"grey"} size={12} />
-                    <Text style={styles.amount}>{data?.amount} pint of blood</Text>
+                    <Text style={styles.amount}>1 pint of blood</Text>
                 </View>
             </View>
         </View>

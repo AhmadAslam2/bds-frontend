@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, } from 'react-native'
 import { Icon, Input } from 'react-native-elements';
 import { Formik } from 'formik'
 import colors from '../config/colors'
+import { DatePicker } from 'react-native-woodpicker'
+
 
 export default function ConfirmationCard({ navigation, requestData }) {
     const maxAmount = requestData.amountNeeded - requestData.amountFilled
+    const [pickedDate, setPickedDate] = useState();
+
+    const handleText = () => pickedDate
+        ? pickedDate.toDateString()
+        : "Choose Date";
+    const handleDateChange = (value) => {
+        setPickedDate(value)
+    }
     return (
         <View style={styles.confirm}>
             <View>
@@ -27,20 +37,23 @@ export default function ConfirmationCard({ navigation, requestData }) {
                     navigation.navigate('ProfileScreen')
                 }}
             >
-                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
                     <>
                         <View style={{ flexDirection: 'row', width: "100%", justifyContent: "center" }}>
                             <View style={{ alignSelf: 'center' }}>
-                                <Input
-                                    placeholder="Date"
-                                    leftIcon={{ type: 'ionicon', name: 'calendar-outline', color: 'white', size: 15 }}
-                                    placeholderTextColor="white"
-                                    containerStyle={styles.input}
-                                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                                    inputStyle={{ color: 'white' }}
-                                    onChangeText={handleChange('date')}
-                                    onBlur={handleBlur('date')}
-                                    value={values.date}
+                                <DatePicker
+                                    // value={new Date()}
+                                    onDateChange={(value) => {
+                                        // console.log("value===>", value);
+                                        setPickedDate(value)
+                                        setFieldValue("date", value)
+                                    }}
+                                    title="Date Picker"
+                                    text={handleText()}
+                                    isNullable={false}
+                                    iosDisplay="inline"
+                                    textInputStyle={{ color: "white" }}
+                                    containerStyle={{ backgroundColor: "#506EDA", height: 40, borderRadius: 15, paddingHorizontal: 10, justifyContent: "center", }}
                                 />
                             </View>
                             {/* <View>

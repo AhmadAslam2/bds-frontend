@@ -34,12 +34,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: true, title: "Signin" }} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: true, title: "Singnup" }} />
-        <Stack.Screen name="LandingScreen" component={LandingScreen} options={{ headerShown: true, title: "Home" }} />
+        <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false, title: "" }} />
+        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false, title: "" }} />
+        <Stack.Screen name="LandingScreen" component={LandingScreen} options={{ headerShown: false, title: "" }} />
         <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ headerShown: true, title: "" }} />
         <Stack.Screen name="RequestDescriptionScreen" component={RequestDiscriptionScreen} options={{ headerShown: true, title: "" }} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: true, title: "" }} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false, title: "" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

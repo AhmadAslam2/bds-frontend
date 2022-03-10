@@ -10,6 +10,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^5.1.0",
+    "@react-native-picker/picker": "^2.3.1",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "axios": "^0.25.0",
@@ -17,6 +19,7 @@
     "expo-secure-store": "~11.0.3",
     "expo-status-bar": "~1.1.0",
     "formik": "^2.2.9",
+    "moment": "^2.29.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.2",
@@ -29,6 +32,7 @@
     "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
+    "react-native-woodpicker": "^0.3.17",
     "yup": "^0.32.11"
   },
   "devDependencies": {

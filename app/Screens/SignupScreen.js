@@ -1,10 +1,11 @@
 import { Formik } from 'formik'
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import { Icon, Input } from 'react-native-elements'
 import colors from '../config/colors'
 import * as Yup from 'yup';
 import { signup } from '../apis/auth'
+import { saveInStorage } from '../utils'
 
 
 const SignUpSchema = Yup.object().shape({
@@ -12,13 +13,14 @@ const SignUpSchema = Yup.object().shape({
         .min(6, 'Too Short!')
         .max(20, 'Too Long!')
         .required('Required'),
-    passwordConfirmation: Yup.string()
+    verifyPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
     email: Yup.string().email('Invalid email').required('Required'),
 });
 export default function SignupScreen({ navigation }) {
+    const [loading, setLoading] = useState(false)
     return (
-        <View style={styles.Container}>
+        <ScrollView contentContainerStyle={styles.Container}>
             <View style={styles.content}>
                 <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                     <Text style={{ fontSize: 16 }}>
@@ -44,17 +46,25 @@ export default function SignupScreen({ navigation }) {
                 <Formik
                     initialValues={{
                         email: "",
-                        password: ""
+                        password: "",
+                        firstName: "",
+                        lastName: "",
+                        verifyPassword: "",
+                        contactNumber: "",
+                        bloodGroup: ""
                     }}
                     validationSchema={SignUpSchema}
                     onSubmit={async (values) => {
                         try {
                             setLoading(true)
-                            const res = await signup(values);
-                            console.log("REs", res)
+                            const { verifyPassword, ...payload } = values;
+                            // console.log("values", payload)
+                            const res = await signup(payload);
+                            // console.log("REs", res)
                             await saveInStorage("token", res?.data?.token)
                             setLoading(false)
                             navigation.navigate('LandingScreen')
+
                         } catch (error) { console.log("error", error) }
                     }}
                 >
@@ -70,11 +80,12 @@ export default function SignupScreen({ navigation }) {
                                         style={styles.input}
                                         onChangeText={handleChange('firstName')}
                                         onBlur={handleBlur('firstName')}
-                                        value={values?.bloodGroup}
+                                        value={values?.firstName}
                                         inputContainerStyle={{ borderBottomWidth: 0, }}
                                         containerStyle={{ paddingLeft: 0 }}
                                     >
                                     </Input>
+                                    <Text>{errors.firstName}</Text>
                                 </View>
                                 <View style={{ flex: 1 }}>
                                     <Text style={{ fontSize: 16, fontWeight: "400", paddingBottom: 15 }}>
@@ -85,11 +96,12 @@ export default function SignupScreen({ navigation }) {
                                         style={styles.input}
                                         onChangeText={handleChange('lastName')}
                                         onBlur={handleBlur('lastName')}
-                                        value={values?.telephoneNumber}
+                                        value={values?.lastName}
                                         inputContainerStyle={{ borderBottomWidth: 0 }}
                                         containerStyle={{ paddingHorizontal: 0 }}
                                     >
                                     </Input>
+                                    <Text>{errors.lastName}</Text>
                                 </View>
                             </View>
                             <View>
@@ -107,6 +119,7 @@ export default function SignupScreen({ navigation }) {
                                     containerStyle={{ paddingHorizontal: 0 }}
                                 >
                                 </Input>
+                                <Text>{errors.email}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View style={{ flex: 1 }}>
@@ -123,6 +136,8 @@ export default function SignupScreen({ navigation }) {
                                         containerStyle={{ paddingLeft: 0 }}
                                     >
                                     </Input>
+                                    <Text>{errors.bloodGroup}</Text>
+
                                 </View>
                                 <View style={{ flex: 1 }}>
                                     <Text style={{ fontSize: 16, fontWeight: "400", paddingBottom: 15 }}>
@@ -134,11 +149,13 @@ export default function SignupScreen({ navigation }) {
                                         style={styles.input}
                                         onChangeText={handleChange('contactNumber')}
                                         onBlur={handleBlur('contactNumber')}
-                                        value={values?.telephoneNumber}
+                                        value={values?.contactNumber}
                                         inputContainerStyle={{ borderBottomWidth: 0 }}
                                         containerStyle={{ paddingHorizontal: 0 }}
                                     >
                                     </Input>
+                                    <Text>{errors.contactNumber}</Text>
+
                                 </View>
                             </View>
                             <View style={{ padding: 0 }}>
@@ -157,6 +174,7 @@ export default function SignupScreen({ navigation }) {
                                     containerStyle={{ paddingHorizontal: 0 }}
                                 >
                                 </Input>
+                                <Text>{errors.password}</Text>
                             </View>
                             <View style={{ padding: 0 }}>
                                 <Text style={{ fontSize: 16, fontWeight: "400", paddingBottom: 15 }}>
@@ -174,9 +192,11 @@ export default function SignupScreen({ navigation }) {
                                     containerStyle={{ paddingHorizontal: 0 }}
                                 >
                                 </Input>
+                                <Text>{errors.verifyPassword}</Text>
+
                             </View>
                             <TouchableOpacity style={styles.button}
-                                onPress={() => handleSubmit}
+                                onPress={handleSubmit}
                             >
                                 <Text style={styles.buttonText}>
                                     Sign up
@@ -185,7 +205,7 @@ export default function SignupScreen({ navigation }) {
                         </>
                     )}</Formik>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -206,7 +226,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#506EDA",
         height: "100%",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        minHeight: 900
     },
     content: {
         width: "90%",

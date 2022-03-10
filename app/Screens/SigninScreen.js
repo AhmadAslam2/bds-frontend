@@ -1,6 +1,6 @@
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import { Icon, Input } from 'react-native-elements'
 import colors from '../config/colors'
 import * as Yup from 'yup';
@@ -18,7 +18,7 @@ const SignInSchema = Yup.object().shape({
 export default function SigninScreen({ navigation }) {
     const [loading, setLoading] = useState(false)
     return (
-        <View style={styles.Container}>
+        <ScrollView contentContainerStyle={styles.Container}>
             <View style={styles.content}>
                 <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                     <Text style={{ fontSize: 16 }}>
@@ -58,7 +58,7 @@ export default function SigninScreen({ navigation }) {
                         try {
                             setLoading(true)
                             const res = await signin(values);
-                            console.log("Res", res)
+                            // console.log("Res", res)
                             await saveInStorage("token", res?.data?.token)
                             setLoading(false)
                             navigation.navigate('LandingScreen')
@@ -78,12 +78,15 @@ export default function SigninScreen({ navigation }) {
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
                                     value={values?.email}
+                                    autoCapitalize="none"
                                     inputContainerStyle={{ borderBottomWidth: 0 }}
                                     containerStyle={{ paddingHorizontal: 0 }}
+                                    autoCorrect={false}
                                 >
                                 </Input>
+                                <Text>{errors.email}</Text>
                             </View>
-                            <Text>{errors.email}</Text>
+
                             <View style={{ padding: 0 }}>
                                 <Text style={{ fontSize: 16, fontWeight: "400", paddingBottom: 15 }}>
                                     Enter your Password
@@ -100,13 +103,14 @@ export default function SigninScreen({ navigation }) {
                                     containerStyle={{ paddingHorizontal: 0, margin: 0 }}
                                 >
                                 </Input>
+                                <Text>{errors.password}</Text>
                                 <TouchableOpacity style={{ alignSelf: "flex-end" }}>
                                     <Text style={{ fontSize: 11, color: "#4285F4" }}>
                                         Forgot Password
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <Text>{errors.password}</Text>
+
                             <TouchableOpacity style={styles.button}
                                 onPress={
                                     handleSubmit
@@ -120,7 +124,7 @@ export default function SigninScreen({ navigation }) {
                     )}</Formik>
 
             </View>
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -141,7 +145,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#506EDA",
         height: "100%",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        minHeight: 800
     },
     content: {
         width: "90%",
