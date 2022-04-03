@@ -1,18 +1,41 @@
-import React from 'react'
+import React, {
+    useState, useEffect
+} from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements';
-
+import { fetchUser } from '../apis/auth';
 import colors from '../config/colors'
 
 export default function RequestCard({ navigation, requestData }) {
+    const [userDetails, setUserDetails] = useState({});
+    const [waiting, setWaiting] = useState(false)
+    useEffect(() => {
+        setWaiting(true)
+        const fetchUserDetails = async () => {
+            try {
+                const res = await fetchUser(requestData?.userId);
+                // console.log("///////////////////////////res", res?.data)
+                setUserDetails(res?.data?.user)
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setWaiting(false)
+            }
+        }
+        fetchUserDetails()
+    }, [])
     return (
         <TouchableOpacity onPress={() => navigation.navigate('RequestDescriptionScreen', {
-            requestData
+            requestData,
+            userDetails
         })}>
             <View style={styles.requestCard}>
                 <View style={styles.requestLocation}>
-                    <Avatar rounded title="MB" style={styles.avatar} />
-                    <Text style={styles.receiverName}>{requestData?.donorName}</Text>
+                    <Avatar
+                        rounded
+                        title={waiting ? '--' : userDetails.firstName}
+                        style={styles.avatar} />
+                    <Text style={styles.receiverName}>{waiting ? '--' : userDetails?.firstName} {waiting ? '--' : userDetails?.lastName}</Text>
                     <View style={styles.hospitalInfo}>
                         <Icon name="location" type="ionicon" color="#506EDA" size={16} />
                         <Text style={styles.hospitalName}>{requestData?.location}</Text>

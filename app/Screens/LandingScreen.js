@@ -1,63 +1,67 @@
 
 import React, { useEffect, useState } from 'react'
-import { Icon, SearchBar } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import * as SecureStore from 'expo-secure-store';
 
 import LocationCard from '../Components/LocationCard'
-import MenuBar from '../Components/MenuBar'
 import RequestCard from '../Components/RequestCard'
+import { donationRequests } from '../apis/auth';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
-export default function LandingScreen({ navigation }) {
+export default function LandingScreen() {
+    const navigation = useNavigation()
+    const isFocused = useIsFocused();
+    const [filterType, setFilterType] = useState("all")
     const [loading, setLoading] = useState(false)
+    const [donationRequest, setDonationRequest] = useState([])
     useEffect(() => {
-
-    })
-    const [search, setSearch] = useState("");
-
-    const updateSearch = (search) => {
-        setSearch(search);
-    };
+        if (isFocused) {
+            setLoading(true)
+            const fetchDonationRequest = async () => {
+                try {
+                    const res = await donationRequests(filterType)
+                    // console.log(res)
+                    setDonationRequest(res.data?.donationRequests)
+                    setLoading(false)
+                } catch (error) {
+                    console.log("error", error)
+                } finally {
+                    setLoading(false)
+                }
+            }
+            fetchDonationRequest()
+        }
+    }, [isFocused, filterType])
     const signOut = () => {
         SecureStore.deleteItemAsync('token').then(
-            navigation.navigate('SigninScreen')
+            navigation?.navigate('SigninScreen')
         );
     }
     return (
 
         <SafeAreaView style={styles.container}>
-            {loading ? <Text>Loading..</Text> : (
-                <>
-                    <View style={styles.topBar}>
-                        <SearchBar
-                            placeholder="Search..."
-                            onChangeText={updateSearch}
-                            value={search}
-                            containerStyle={{
-                                backgroundColor: "white", width: "50%", height: 50, borderBottomColor: "transparent", borderTopColor: "transparent"
-                            }}
-                            inputContainerStyle={{ backgroundColor: "white", width: "100%", height: 30, }}
-                            lightTheme
-                        />
-                        <TouchableOpacity style={{ alignSelf: "center" }} onPress={signOut}  >
-                            <Icon name="log-out-outline" type="ionicon" color={"#7D859D"} />
-                        </TouchableOpacity>
-                    </View>
-                    <LocationCard />
-                    <ScrollView style={styles.requestContainer}>
-                        <Text style={styles.requestListText}>
-                            Request List
-                        </Text>
-                        {requestList.map((rq, index) => {
+            <>
+                <View style={styles.topBar}>
+                    <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation?.navigate('NgoListScreen')}  >
+                        <Icon name="search-outline" type="ionicon" color={"#7D859D"} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ alignSelf: "center" }} onPress={signOut}  >
+                        <Icon name="log-out-outline" type="ionicon" color={"#7D859D"} />
+                    </TouchableOpacity>
+                </View>
+                <LocationCard setFilterType={setFilterType} />
+                <ScrollView style={styles.requestContainer}>
+                    {loading ? <Text>Loading..</Text> : <>
+                        {donationRequest?.reverse().map((rq, index) => {
                             return (
                                 <RequestCard requestData={rq} navigation={navigation} key={index} />
                             )
                         })}
-                    </ScrollView>
-                </>
-            )}
+                    </>}
 
-            <MenuBar navigation={navigation} setLoading={setLoading} />
+                </ScrollView>
+            </>
         </SafeAreaView>
     )
 }

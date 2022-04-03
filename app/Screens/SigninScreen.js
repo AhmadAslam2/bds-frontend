@@ -1,11 +1,12 @@
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { Alert, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import { Icon, Input } from 'react-native-elements'
 import colors from '../config/colors'
 import * as Yup from 'yup';
 import { signin } from '../apis/auth'
 import { saveInStorage } from '../utils'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 const SignInSchema = Yup.object().shape({
     password: Yup.string()
@@ -15,7 +16,8 @@ const SignInSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
 });
 
-export default function SigninScreen({ navigation }) {
+export default function SigninScreen() {
+    const navigation = useNavigation()
     const [loading, setLoading] = useState(false)
     return (
         <ScrollView contentContainerStyle={styles.Container}>
@@ -50,15 +52,14 @@ export default function SigninScreen({ navigation }) {
 
                 <Formik
                     initialValues={{
-                        email: "",
-                        password: ""
+                        email: "ahmadaslam1999@gmail.com",
+                        password: "123123"
                     }}
                     validationSchema={SignInSchema}
                     onSubmit={async (values) => {
                         try {
                             setLoading(true)
                             const res = await signin(values);
-                            // console.log("Res", res)
                             await saveInStorage("token", res?.data?.token)
                             setLoading(false)
                             navigation.navigate('LandingScreen')

@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, } from 'react-native'
 import { Icon, Input } from 'react-native-elements';
 import { Formik } from 'formik'
 import colors from '../config/colors'
 import { DatePicker } from 'react-native-woodpicker'
+import { confirmDonation, fetchDonation } from '../apis/auth';
 
 
 export default function ConfirmationCard({ navigation, requestData }) {
+    const [loading, setLoading] = useState(false)
+    const [waiting, setWaiting] = useState(false)
+    const [donation, setDonation] = useState({})
     const maxAmount = requestData.amountNeeded - requestData.amountFilled
     const [pickedDate, setPickedDate] = useState();
 
@@ -16,6 +20,20 @@ export default function ConfirmationCard({ navigation, requestData }) {
     const handleDateChange = (value) => {
         setPickedDate(value)
     }
+    useEffect(() => {
+        const fetchDonationRequest = async () => {
+            try {
+                setLoading(true)
+                const res = await fetchDonation(requestData._id);
+                setDonation(res?.data?.donation)
+            } catch (error) {
+                console.log("Error", error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchDonationRequest()
+    }, [])
     return (
         <View style={styles.confirm}>
             <View>
@@ -28,12 +46,14 @@ export default function ConfirmationCard({ navigation, requestData }) {
                     amount: "",
                     date: new Date().getDate().toString()
                 }}
-                onSubmit={(values) => {
-                    global.donationHistory.push({
-                        date: values.date,
-                        amount: values.amount,
-                        location: requestData?.location
-                    });
+                onSubmit={async (values) => {
+                    try {
+                        setWaiting(true)
+                        await confirmDonation(requestData._id)
+                    } catch (error) { console.log("error") }
+                    finally {
+                        setWaiting(false)
+                    }
                     navigation.navigate('ProfileScreen')
                 }}
             >
@@ -42,9 +62,7 @@ export default function ConfirmationCard({ navigation, requestData }) {
                         <View style={{ flexDirection: 'row', width: "100%", justifyContent: "center" }}>
                             <View style={{ alignSelf: 'center' }}>
                                 <DatePicker
-                                    // value={new Date()}
                                     onDateChange={(value) => {
-                                        // console.log("value===>", value);
                                         setPickedDate(value)
                                         setFieldValue("date", value)
                                     }}
@@ -56,18 +74,6 @@ export default function ConfirmationCard({ navigation, requestData }) {
                                     containerStyle={{ backgroundColor: "#506EDA", height: 40, borderRadius: 15, paddingHorizontal: 10, justifyContent: "center", }}
                                 />
                             </View>
-                            {/* <View>
-                                <Input
-                                    placeholder="Amount"
-                                    placeholderTextColor="white"
-                                    containerStyle={styles.input}
-                                    inputStyle={{ color: 'white' }}
-                                    keyboardType='numeric'
-                                    onChangeText={handleChange('amount')}
-                                    onBlur={handleBlur('amount')}
-                                    value={values.amount}
-                                />
-                            </View> */}
                         </View>
                         <View style={{ borderColor: "white", borderWidth: 1, width: '100%' }} />
                         <View style={styles.locationContainer}>
@@ -82,7 +88,7 @@ export default function ConfirmationCard({ navigation, requestData }) {
                         <TouchableOpacity style={styles.button}
                             onPress={handleSubmit}>
                             <Text style={styles.buttonText}>
-                                Confirm
+                                {waiting ? "Please wait..." : "Confirm"}
                             </Text>
                         </TouchableOpacity>
                     </>

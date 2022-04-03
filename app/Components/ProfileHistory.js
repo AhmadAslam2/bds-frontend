@@ -1,27 +1,63 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import { myDonationRequests, myDonations } from '../apis/auth'
 import ProfileHistoryElement from './ProfileHistoryElement'
 
-export default function ProfileHistory() {
+export default function ProfileHistory({ navigation }) {
+    const [acitveTab, setActiveTab] = useState("requests")
+    const [donations, setDonations] = useState([])
+    const [loading, setLoading] = useState([])
+    const additionalDonationTextStyles = acitveTab === 'donations' ? styles.active : styles.regular
+    const additionalRequestTextStyles = acitveTab === 'requests' ? styles.active : styles.regular
+    const _myDonationRequests = async () => {
+        try {
+            setLoading(true)
+            const res = await myDonationRequests();
+            setDonations([...res?.data?.donationRequests])
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+    const _myDonations = async () => {
+        try {
+            setLoading(true)
+            const res = await myDonations()
+            setDonations([...res?.data?.donations])
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        _myDonationRequests()
+    }, [])
+
     return (
-        <ScrollView style={styles.profileHistoryContainer}>
+        <>
             <View style={styles.buttons}>
-                <TouchableOpacity>
-                    <Text style={styles.dontaions}>
-                        Dontaions
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.requests}>
+                <TouchableOpacity onPress={() => { setActiveTab("requests"); _myDonationRequests() }}>
+                    <Text style={{ ...styles.requests, ...additionalRequestTextStyles }}>
                         Requests
                     </Text>
                 </TouchableOpacity>
-            </View>{
-                global.donationHistory?.map((dh, index) => {
-                    return <ProfileHistoryElement data={dh} key={index} />
-                })
-            }
-        </ScrollView>
+                <TouchableOpacity onPress={() => { setActiveTab("donations"); _myDonations() }}>
+                    <Text style={{ ...styles.dontaions, ...additionalDonationTextStyles }}>
+                        Dontaions
+                    </Text>
+                </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.profileHistoryContainer}>
+                {
+                    donations?.map((dh, index) => {
+                        return <ProfileHistoryElement navigation={navigation} data={dh} key={index} />
+                    })
+                }
+            </ScrollView>
+        </>
     )
 }
 
@@ -29,20 +65,27 @@ const styles = StyleSheet.create({
     buttons: {
         flexDirection: 'row',
         width: '93%',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        marginTop: 10
 
+    },
+    active: {
+        color: "#F44B4B"
+    },
+    regular: {
+        color: "#DADADA"
     },
     dontaions: {
         fontSize: 18,
         fontWeight: "600",
         textDecorationLine: 'underline',
-        color: "#F44B4B"
+
     },
     requests: {
         fontSize: 18,
         fontWeight: "600",
         textDecorationLine: 'underline',
-        color: "#DADADA"
+
     },
     profileHistoryContainer: {
         height: 340,

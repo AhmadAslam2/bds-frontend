@@ -1,13 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { me } from '../apis/auth'
 
 import colors from '../config/colors'
 
 export default function ProfilePicture() {
+    const [userData, setUserData] = useState({})
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            try {
+                const res = await me()
+                setUserData(res.data.user)
+            } catch (error) {
+                console.log("error", error)
+            }
+        }
+        fetchCurrentUser()
+    }, [])
     return (
         <View style={styles.pic}>
             <Text style={styles.profileName}>
-                Ahmad Aslam
+                {userData.firstName} {userData.lastName}
+            </Text>
+            <Text style={styles.profileName}>
+                Contact: {userData.contactNumber}
+            </Text>
+            <Text style={styles.profileName}>
+                Blood Group: {userData.bloodGroup}
+            </Text>
+            <Text style={styles.profileName}>
+                Email: {userData.email}
             </Text>
             <TouchableOpacity style={styles.editButton}>
                 <Text>Edit</Text>

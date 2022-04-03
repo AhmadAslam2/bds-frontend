@@ -12,14 +12,23 @@ export default function RequestDiscriptionAmount({ requestData }) {
             <Text style={styles.descriptonText}>{requestData?.diagnosis || "N/A"}</Text>
             <Text style={styles.headingText}>Location</Text>
             <Text style={styles.descriptonText}>{requestData?.location || "N/A"}</Text>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <Text style={styles.headingText}>Status</Text>
+                <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                    <Text style={{ ...styles.headingText, fontWeight: "bold", color: "white", marginRight: 5 }}>Incomplete</Text>
+                    <Icon name="ellipsis-horizontal-circle-outline" type="ionicon" color="red" size={30} />
+                </View>
+
+            </View>
             <View style={{ borderColor: "grey", borderWidth: 1, width: '100%' }} />
             <View style={{ flexDirection: 'row', justifyContent: "space-evenly", alignItems: 'center' }}>
                 <View>
-                    <Text style={styles.amountText}>Left</Text>
+                    <Text style={styles.amountText}>Filled</Text>
                     <Text style={styles.amountDescripton}>{requestData?.amountFilled}</Text>
                 </View>
                 <View>
-                    <Icon name="blood-drop" type="fontisto" color={colors.secondary} size={80} />
+                    <Icon name="blood-drop" type="fontisto" color="#FCC0BD" size={80} />
+                    <Text style={styles.bloodGroup}>{requestData?.bloodType}</Text>
                 </View>
                 <View>
                     <Text style={styles.amountText}>Need</Text>
@@ -41,15 +50,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         padding: 20
     },
-    headingText: {
-        fontSize: 14,
-        color: '#DADADA'
-    },
-    descriptonText: {
-        fontSize: 18,
-        color: colors.white,
-        fontWeight: '600'
-    },
     amountText: {
         fontSize: 18,
         color: '#DADADA'
@@ -59,6 +59,23 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: '600',
         paddingTop: 8
+    },
+    bloodGroup: {
+        position: "absolute",
+        fontWeight: "bold",
+        fontSize: 25,
+        alignSelf: "center",
+        paddingTop: 35,
+        color: "#4762C6"
+    },
+    descriptonText: {
+        fontSize: 18,
+        color: colors.white,
+        fontWeight: '600'
+    },
+    headingText: {
+        fontSize: 14,
+        color: '#DADADA'
     },
 
 })

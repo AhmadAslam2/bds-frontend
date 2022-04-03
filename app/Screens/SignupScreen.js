@@ -6,6 +6,7 @@ import colors from '../config/colors'
 import * as Yup from 'yup';
 import { signup } from '../apis/auth'
 import { saveInStorage } from '../utils'
+import { useNavigation } from '@react-navigation/native'
 
 
 const SignUpSchema = Yup.object().shape({
@@ -17,7 +18,8 @@ const SignUpSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
     email: Yup.string().email('Invalid email').required('Required'),
 });
-export default function SignupScreen({ navigation }) {
+export default function SignupScreen() {
+    const navigation = useNavigation()
     const [loading, setLoading] = useState(false)
     return (
         <ScrollView contentContainerStyle={styles.Container}>
@@ -40,7 +42,7 @@ export default function SignupScreen({ navigation }) {
                 </View>
                 <View>
                     <Text style={{ fontWeight: "500", fontSize: 40, color: "#F1908C" }}>
-                        Sing up
+                        Sign up
                     </Text>
                 </View>
                 <Formik
@@ -58,9 +60,7 @@ export default function SignupScreen({ navigation }) {
                         try {
                             setLoading(true)
                             const { verifyPassword, ...payload } = values;
-                            // console.log("values", payload)
                             const res = await signup(payload);
-                            // console.log("REs", res)
                             await saveInStorage("token", res?.data?.token)
                             setLoading(false)
                             navigation.navigate('LandingScreen')

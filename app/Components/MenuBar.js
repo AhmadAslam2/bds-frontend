@@ -1,31 +1,37 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
-import { color } from 'react-native-elements/dist/helpers';
-
-
-import colors from '../config/colors';
 import RequestButton from './RequestButton';
 
-
-export default function menuBar({ navigation, setLoading, }) {
-
+export default function MenuBar({ setLoading }) {
+    const [activeTab, setActiveTab] = useState("home")
+    const navigation = useNavigation();
     return (
         <View style={styles.menuBar}>
-            <View style={styles.div1}>
-                <TouchableOpacity onPress={() => navigation?.navigate('LandingScreen')}>
-                    <Icon name="home" type="ionicon" color='grey' />
+            <View style={styles.div2}>
+                <TouchableOpacity onPress={() => {
+                    setActiveTab("home")
+                    navigation?.navigate('LandingScreen')
+                }}>
+                    <Icon name="home" type="ionicon" color={activeTab === "home" ? "#3880ff" : 'grey'} />
                 </TouchableOpacity>
                 <TouchableOpacity >
-                    <Icon name="notifications" type="ionicon" color='grey' />
+                    <Icon name="notifications" type="ionicon" color={activeTab === "notification" ? "#3880ff" : 'grey'} />
                 </TouchableOpacity>
             </View>
             <View style={styles.div2}>
-                <TouchableOpacity >
-                    <Icon name="chatbubble-ellipses" type="ionicon" color='grey' />
+                <TouchableOpacity onPress={() => {
+                    setActiveTab("ngolist")
+                    navigation?.navigate('NgoListScreen')
+                }}>
+                    <Icon name="institution" type="font-awesome" color={activeTab === "ngolist" ? "#3880ff" : 'grey'} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation?.navigate('ProfileScreen')}>
-                    <Icon name="person" type="ionicon" color='grey' />
+                <TouchableOpacity onPress={() => {
+                    setActiveTab("profile")
+                    navigation?.navigate('ProfileScreen')
+                }}>
+                    <Icon name="person" type="ionicon" color={activeTab === "profile" ? "#3880ff" : 'grey'} />
                 </TouchableOpacity>
             </View>
             <RequestButton setLoading={setLoading} />
@@ -51,6 +57,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.41,
         shadowRadius: 9.11,
         elevation: 14,
+        marginBottom: 10
     },
     div1: {
         flex: 1,

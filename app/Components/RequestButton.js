@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { Picker } from 'react-native-woodpicker'
 
 import colors from '../config/colors'
+import { postRequest } from '../apis/auth';
 
 export default function RequestButton({ setLoading }) {
     const [visible, setVisible] = useState(false);
@@ -34,25 +35,24 @@ export default function RequestButton({ setLoading }) {
                     initialValues={{
                         location: '',
                         description: "",
-                        amount: "",
-                        type: "",
+                        amountNeeded: "",
                         diagnosis: "",
                         bloodType: ""
                     }}
-                    onSubmit={values => {
-                        // console.log("values:::::", values)
-                        setLoading && setLoading(true)
-                        global.requestList = [{
-                            donorName: "Ahmad Aslam",
-                            location: values.location,
-                            bloodType: values.bloodType,
-                            amountFilled: "0",
-                            amountNeeded: values.amount,
-                            description: values.description,
-                            diagnosis: values.diagnosis
-                        }, ...global.requestList]
-                        setLoading && setLoading(false)
-                        toggleOverlay()
+                    onSubmit={async values => {
+                        try {
+                            setLoading && setLoading(true);
+                            await postRequest({
+                                ...values
+                            })
+                            setLoading && setLoading(false)
+                            toggleOverlay()
+                        } catch (error) {
+                            console.log(error)
+                        } finally {
+                            setLoading && setLoading(false)
+
+                        }
                     }}
                 >
                     {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
@@ -69,8 +69,8 @@ export default function RequestButton({ setLoading }) {
                             <View style={styles.amountAndTypeContainer}>
                                 <View style={{ width: 100 }}>
                                     <Input placeholder="Amount"
-                                        onChangeText={handleChange('amount')}
-                                        onBlur={handleBlur('amount')}
+                                        onChangeText={handleChange('amountNeeded')}
+                                        onBlur={handleBlur('amountNeeded')}
                                         value={values.amount} style={styles.amount}
                                         autoCorrect={false}
                                         containerStyle={{ marginBottom: 0 }}
@@ -81,7 +81,6 @@ export default function RequestButton({ setLoading }) {
                                         item={pickedData}
                                         items={data}
                                         onItemChange={(item) => {
-                                            // console.log("value", item?.value)
                                             setFieldValue("bloodType", item?.value)
                                         }}
                                         title="Select Blood Group"

@@ -5232,6 +5232,11 @@
   dependencies:
     "prop-types" "^15.5.9"
 
+"react-native-phone-call@^1.0.9":
+  "integrity" "sha512-OPWYg8qeWNG/U4bWGMAKcQTH/ifqJnsvUPCH4lOkvWFHbQS3fbH5M8rFhXCzcfS0GVNzHhZX9ZByMM368TFAUQ=="
+  "resolved" "https://registry.npmjs.org/react-native-phone-call/-/react-native-phone-call-1.0.9.tgz"
+  "version" "1.0.9"
+
 "react-native-ratings@8.0.4":
   "integrity" "sha512-Xczu5lskIIRD6BEdz9A0jDRpEck/SFxRqiglkXi0u67yAtI1/pcJC76P4MukCbT8K4BPVl+42w83YqXBoBRl7A=="
   "resolved" "https://registry.npmjs.org/react-native-ratings/-/react-native-ratings-8.0.4.tgz"

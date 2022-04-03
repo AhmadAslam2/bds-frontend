@@ -5,5 +5,11 @@ export async function saveInStorage(key, value) {
 }
 
 export async function getFromStorage(key) {
-    return await SecureStore.getItemAsync(key);
+    const res = await SecureStore.getItemAsync(key);
+    return `Bearer ${res}`
+}
+
+
+export function isLoggedIn(key) {
+    return SecureStore.getItemAsync(key)
 }

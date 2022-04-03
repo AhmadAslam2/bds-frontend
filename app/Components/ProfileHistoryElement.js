@@ -1,33 +1,44 @@
 import moment from 'moment';
 import React from 'react'
-import { StyleSheet, Text, View, } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements';
 
-import colors from '../config/colors';
 
-export default function ProfileHistoryElement({ data }) {
+export default function ProfileHistoryElement({ navigation, data }) {
+    const requestData = data
     return (
-        <View style={styles.element}>
-            <View style={styles.dateContainer}>
-                <Text style={styles.month}>
-                    {moment(data?.date).format('MMM')}
-                </Text>
-                <Text style={styles.date}>
-                    {moment(data?.date).format('DD')}
-                </Text>
-            </View>
-            <View>
-                <View>
-                    <Text style={styles.hospital}>
-                        {data?.location || "N/A"}
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate("RequestDescriptionScreen", { requestData })
+            }}
+            style={{ flexDirection: 'row', alignItems: "center" }}>
+            <View style={styles.element}>
+                <View style={styles.dateContainer}>
+                    <Text style={styles.month}>
+                        {moment(data?.date).format('MMM')}
+                    </Text>
+                    <Text style={styles.date}>
+                        {moment(data?.date).format('DD')}
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <Icon name="blood-drop" type="fontisto" color={"grey"} size={12} />
-                    <Text style={styles.amount}>1 pint of blood</Text>
+                <View>
+                    <View>
+                        <Text style={styles.hospital}>
+                            {data?.location || "N/A"}
+                        </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Icon name="blood-drop" type="fontisto" color={"grey"} size={12} />
+                        <Text style={styles.amount}>1 pint of blood</Text>
+                    </View>
                 </View>
+
             </View>
-        </View>
+            <View style={{ paddingTop: 25, }}>
+                <Icon name="ellipsis-horizontal-circle-outline" type="ionicon" color="red" size={30} />
+
+            </View>
+        </TouchableOpacity>
     )
 }
 
@@ -49,7 +60,8 @@ const styles = StyleSheet.create({
     },
     dateContainer: {
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingRight: 10
     },
     date: {
         fontSize: 48,

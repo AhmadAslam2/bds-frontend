@@ -1,29 +1,67 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements';
+import { Picker } from 'react-native-woodpicker'
 
 import colors from '../config/colors'
 
-export default function locationCard() {
+export default function locationCard({ setFilterType }) {
+    const [pickedData, setPickedData] = useState("A+");
+    const data = [
+        { label: "none", value: "all", },
+        { label: "A+", value: "A+", },
+        { label: "A-", value: "A-", },
+        { label: "B+", value: "B+", },
+        { label: "B-", value: "B-", },
+        { label: "O+", value: "O+", },
+        { label: "O-", value: "O-", },
+        { label: "AB+", value: "AB+", },
+        { label: "AB-", value: "AB-", },
+    ]
     return (
-        <View style={styles.locationCard}>
-            <Text style={styles.locationText}>Location</Text>
-            <View style={styles.location}>
-                <Text style={styles.city}>
-                    Lahore
-                </Text>
-                <Text>
-                    <Icon name="location" type="ionicon" color={colors.secondary} />
-                </Text>
-            </View>
-            <View style={{ borderBottomColor: "grey", borderBottomWidth: 1 }} />
-            <View style={styles.bloodGroup}>
-                <Text style={styles.chooseBlood}>Choose your Blood Group</Text>
-                <View style={styles.bloodGroupLetterContainer}>
-                    <Text style={styles.bloodGroupLetter}> O-</Text>
+        <>
+            <View style={styles.locationCard}>
+                <Text style={styles.locationText}>Location</Text>
+                <View style={styles.location}>
+                    <Text style={styles.city}>
+                        Lahore
+                    </Text>
+                    <Text>
+                        <Icon name="location" type="ionicon" color={colors.secondary} />
+                    </Text>
+                </View>
+                <View style={{ borderBottomColor: "grey", borderBottomWidth: 1 }} />
+                <View style={styles.bloodGroup}>
+                    <Text style={styles.chooseBlood}>Choose your Blood Group</Text>
+                    <TouchableOpacity
+                        style={styles.bloodGroupLetterContainer}
+                    >
+                        <Picker
+                            item={pickedData}
+                            items={data}
+                            onItemChange={(item) => {
+                                // setFieldValue("bloodType", item?.value)
+                                setFilterType(item.value)
+
+                            }}
+                            title="Select Blood Group"
+                            doneButtonLabel='Confirm'
+                            placeholder="Blood Group"
+                            textInputStyle={{ color: "white", alignSelf: "center", fontWeight: "bold", fontSize: 20 }}
+
+                            containerStyle={{ height: 42, borderColor: "transparent", justifyContent: 'center' }}
+                            isNullable={false}
+                        />
+                        {/* <Text style={styles.bloodGroupLetter}> O-</Text> */}
+                    </TouchableOpacity>
                 </View>
             </View>
-        </View>
+            <View>
+                <Text style={styles.requestListText}>
+                    Request List
+                </Text>
+            </View>
+        </>
     )
 }
 const styles = StyleSheet.create({
@@ -70,5 +108,12 @@ const styles = StyleSheet.create({
         color: "#B6C6FF",
         fontSize: 14,
         paddingBottom: 10
-    }
+    },
+    requestListText: {
+        color: "#7D859D",
+        fontSize: 18,
+        fontWeight: "normal",
+        paddingLeft: 20,
+        paddingTop: 5
+    },
 })

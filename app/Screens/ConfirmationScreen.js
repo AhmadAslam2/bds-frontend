@@ -3,27 +3,17 @@ import { StyleSheet, Text, TouchableOpacity, SafeAreaView, View, Button } from '
 
 import LocationMap from '../Components/LocationMap'
 import ConfirmationCard from '../Components/ConfirmationCard'
-import { Icon } from 'react-native-elements';
 
 import colors from '../config/colors'
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-export default function ConfirmationScreen({ navigation, route }) {
+export default function ConfirmationScreen() {
+    const navigation = useNavigation()
+    const route = useRoute()
     return (
         <SafeAreaView style={styles.container}>
-            {/* <TouchableOpacity style={styles.topBar}>
-                <View>
-                    <Icon name="arrow-back" type="ionicon" color={colors.black} size={22} />
-                </View>
-                <Text style={styles.topBarText}>Patient Info</Text>
-            </TouchableOpacity> */}
             <LocationMap />
             <ConfirmationCard requestData={route?.params.requestData} navigation={navigation} />
-            {/* <TouchableOpacity style={styles.button}
-                onPress={() => navigation.navigate('ProfileScreen')}>
-                <Text style={styles.buttonText}>
-                    Confirm
-                </Text>
-            </TouchableOpacity> */}
         </SafeAreaView>
     )
 }

@@ -4,11 +4,11 @@ import { Icon, Avatar } from 'react-native-elements'
 
 import colors from '../config/colors'
 
-export default function RequestDiscription({ requestData }) {
+export default function RequestDiscription({ requestData, userDetails }) {
     return (
         <View style={styles.RequestDetailContainer}>
-            <Avatar rounded title="MB" style={styles.avatar} />
-            <Text style={styles.receiverName}>{requestData?.donorName}</Text>
+            <Avatar rounded title="" style={styles.avatar} />
+            <Text style={styles.receiverName}>{userDetails?.firstName} {userDetails?.lastName}</Text>
             <Text style={styles.requestId}>
                 #{Math.floor(Math.random() * 90000) + 10000}
             </Text>
@@ -21,15 +21,15 @@ export default function RequestDiscription({ requestData }) {
 
 const styles = StyleSheet.create({
     avatar: {
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         backgroundColor: colors.secondary,
         borderRadius: 100
     },
     RequestDetailContainer: {
         flexDirection: 'column',
         width: "100%",
-        height: 295,
+        height: 250,
         justifyContent: "space-evenly",
         alignItems: "center",
     },
