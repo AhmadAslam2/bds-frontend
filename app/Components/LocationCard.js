@@ -40,13 +40,12 @@ export default function locationCard({ setFilterType }) {
                             item={pickedData}
                             items={data}
                             onItemChange={(item) => {
-                                // setFieldValue("bloodType", item?.value)
                                 setFilterType(item.value)
 
                             }}
                             title="Select Blood Group"
                             doneButtonLabel='Confirm'
-                            placeholder="Blood Group"
+                            placeholder="none"
                             textInputStyle={{ color: "white", alignSelf: "center", fontWeight: "bold", fontSize: 20 }}
 
                             containerStyle={{ height: 42, borderColor: "transparent", justifyContent: 'center' }}

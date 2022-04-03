@@ -8,6 +8,7 @@ import LocationCard from '../Components/LocationCard'
 import RequestCard from '../Components/RequestCard'
 import { donationRequests } from '../apis/auth';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import AndriodSafeAreaView from '../Components/AndriodSafeAreaView';
 
 export default function LandingScreen() {
     const navigation = useNavigation()
@@ -40,7 +41,7 @@ export default function LandingScreen() {
     }
     return (
 
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={{ ...styles.container, ...AndriodSafeAreaView.AndroidSafeArea }}>
             <>
                 <View style={styles.topBar}>
                     <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation?.navigate('NgoListScreen')}  >

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements';
-import call from 'react-native-phone-call'
+// import Clipboard from 'expo-clipboard';
 
 import RequestDiscription from '../Components/RequestDiscription';
 import RequestDiscriptionAmount from '../Components/RequestDiscriptionAmount';
@@ -14,22 +14,23 @@ export default function RequestDiscriptionScreen() {
     const navigation = useNavigation()
     const requestData = route?.params?.requestData
     const userDetails = route?.params?.userDetails
-    const args = {
-        number: '//0321-4324862', // String value with the number to call
-        prompt: true // Optional boolean property. Determines if the user should be prompt prior to the call 
-    }
+    // const args = {
+    //     number: '//0321-4324862', // String value with the number to call
+    //     prompt: true // Optional boolean property. Determines if the user should be prompt prior to the call 
+    // }
+    // const copyToClipboard = () => {
+    //     Clipboard.setString("value");
+    // };
     return (
 
-        <SafeAreaView style={styles.discriptionContainer}>
+        <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
             <View style={styles.weirdPadding}>
                 <RequestDiscription userDetails={userDetails} requestData={route?.params.requestData} />
             </View>
             <View style={styles.weirdPadding}>
                 <RequestDiscriptionAmount requestData={route?.params.requestData} />
             </View>
-            <TouchableOpacity style={styles.contactNumberContainer} onPress={() => {
-                call(args).catch(console.error)
-            }}>
+            <TouchableOpacity style={styles.contactNumberContainer}>
 
                 <Icon name="call" type="ionicon" color="#2cfa1c" size={25} style={{ paddingRight: 10 }} />
                 <Text style={{ color: "white", fontSize: 25 }}>
@@ -49,6 +50,10 @@ export default function RequestDiscriptionScreen() {
 }
 
 const styles = StyleSheet.create({
+    AndroidSafeArea: {
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    },
     button: {
         width: "100%",
         backgroundColor: colors.secondary,

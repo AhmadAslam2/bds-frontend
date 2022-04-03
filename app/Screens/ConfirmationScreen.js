@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, SafeAreaView, View, Button } from '
 
 import LocationMap from '../Components/LocationMap'
 import ConfirmationCard from '../Components/ConfirmationCard'
+import AndriodSafeAreaView from '../Components/AndriodSafeAreaView';
 
 import colors from '../config/colors'
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -11,7 +12,7 @@ export default function ConfirmationScreen() {
     const navigation = useNavigation()
     const route = useRoute()
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={{ ...styles.container, ...AndriodSafeAreaView.AndroidSafeArea }}>
             <LocationMap />
             <ConfirmationCard requestData={route?.params.requestData} navigation={navigation} />
         </SafeAreaView>

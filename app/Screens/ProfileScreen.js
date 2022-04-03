@@ -7,6 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 import ProfileHistory from '../Components/ProfileHistory'
 import ProfilePicture from '../Components/ProfilePicture'
 import { useNavigation } from '@react-navigation/native';
+import AndriodSafeAreaView from '../Components/AndriodSafeAreaView';
 
 
 export default function ProfileScreen() {
@@ -44,7 +45,7 @@ export default function ProfileScreen() {
 
 
     return (
-        <SafeAreaView style={styles.profileContainer}>
+        <SafeAreaView style={{ ...styles.profileContainer, ...AndriodSafeAreaView.AndroidSafeArea }}>
             <TouchableOpacity style={{ flexDirection: "row", alignSelf: "flex-end", paddingRight: 20 }} onPress={signOut}  >
                 <Icon name="log-out-outline" type="ionicon" color={"#7D859D"} />
             </TouchableOpacity>

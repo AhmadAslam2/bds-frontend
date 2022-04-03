@@ -1208,6 +1208,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
+"@react-native-clipboard/clipboard@^1.8.5":
+  "integrity" "sha512-o2RPDwP9JMnLece1Qq6a3Fsz/VxfA9auLckkGOor7WcI82DWaWiJ6Uiyu7H1xpaUyqWc+ypVKRX680GYS36HjA=="
+  "resolved" "https://registry.npmjs.org/@react-native-clipboard/clipboard/-/clipboard-1.8.5.tgz"
+  "version" "1.8.5"
+
 "@react-native-community/cli-debugger-ui@^5.0.1":
   "integrity" "sha512-5gGKaaXYOVE423BUqxIfvfAVSj5Cg1cU/TpGbeg/iqpy2CfqyWqJB3tTuVUbOOiOvR5wbU8tti6pIi1pchJ+oA=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-5.0.1.tgz"
@@ -1331,6 +1336,11 @@
     "strip-ansi" "^5.2.0"
     "sudo-prompt" "^9.0.0"
     "wcwidth" "^1.0.1"
+
+"@react-native-community/clipboard@^1.5.1":
+  "integrity" "sha512-AHAmrkLEH5UtPaDiRqoULERHh3oNv7Dgs0bTC0hO5Z2GdNokAMPT5w8ci8aMcRemcwbtdHjxChgtjbeA38GBdA=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/clipboard/-/clipboard-1.5.1.tgz"
+  "version" "1.5.1"
 
 "@react-native-community/datetimepicker@^5.1.0":
   "integrity" "sha512-DsKmdthZIb1AfuvpPE0iOiw4iQLXUWY3mJEYpGe9iUJt7pOkNnqHk6D95wqg4wjZ2bEBLAPfvndoeWZAjAZKfw=="
@@ -2812,6 +2822,11 @@
     "path-browserify" "^1.0.0"
     "url-parse" "^1.4.4"
 
+"expo-clipboard@^2.1.1":
+  "integrity" "sha512-ay4zv7JGIWT/lqFsonWK8BQ4FuMLaSNFg5gaYJQcIZgZoCyF9f7GRh1HrV3tA0rCPA3i9T6Kt8/8vMMrraH9RQ=="
+  "resolved" "https://registry.npmjs.org/expo-clipboard/-/expo-clipboard-2.1.1.tgz"
+  "version" "2.1.1"
+
 "expo-constants@~12.1.3":
   "integrity" "sha512-HXlMTPn9pnJdMju3WcwX4oEB7EOECOTzdIPaG3JEluygqzafwKLMR8BE82+64jgAxlGIWZsYl+3Ni9wuTFQeYw=="
   "resolved" "https://registry.npmjs.org/expo-constants/-/expo-constants-12.1.3.tgz"
@@ -2881,7 +2896,7 @@
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.1.0.tgz"
   "version" "1.1.0"
 
-"expo@~43.0.0":
+"expo@*", "expo@~43.0.0":
   "integrity" "sha512-DeNYkRM7mPOlCOcORI4FUyt13Rbq4wfRDtD6hbo7oN6OyP5NlACtRZ3ZPessXO93v/HrZBHYCLmydW6vjhnCyg=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-43.0.2.tgz"
   "version" "43.0.2"
@@ -5311,7 +5326,7 @@
   "resolved" "https://registry.npmjs.org/react-native-woodpicker/-/react-native-woodpicker-0.3.17.tgz"
   "version" "0.3.17"
 
-"react-native@*", "react-native@>= 0.51", "react-native@>=0.45.0", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@0.64.2":
+"react-native@*", "react-native@>= 0.51", "react-native@>=0.45.0", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.57.0", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@0.64.2":
   "integrity" "sha512-Ty/fFHld9DcYsFZujXYdeVjEhvSeQcwuTGXezyoOkxfiGEGrpL/uwUZvMzwShnU4zbbTKDu2PAm/uwuOittRGA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.64.2.tgz"
   "version" "0.64.2"
@@ -5354,7 +5369,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
-"react@*", "react@^16.8.0 || ^17.0.0", "react@>= 16.0 || < 17.0", "react@>=16.8.0", "react@>=17.0.1", "react@16 || 17", "react@17.0.1":
+"react@*", "react@^16.8.0 || ^17.0.0", "react@>= 16.0 || < 17.0", "react@>=16.0", "react@>=16.8.0", "react@>=17.0.1", "react@16 || 17", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"

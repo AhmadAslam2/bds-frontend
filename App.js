@@ -30,13 +30,13 @@ export default function App() {
           setActiveScreen(screenName)
         },
       }}>
+        <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false, title: "" }} />
+        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false, title: "" }} />
         <Stack.Screen name="LandingScreen" component={LandingScreen} options={{ headerShown: false, title: "" }} />
         <Stack.Screen name="NgoListScreen" component={NgoListScreen} options={{ headerShown: false, title: "" }} />
         <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ headerShown: true, title: "" }} />
         <Stack.Screen name="RequestDescriptionScreen" component={RequestDiscriptionScreen} options={{ headerShown: true, title: "" }} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false, title: "" }} />
-        <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false, title: "" }} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false, title: "" }} />
       </Stack.Navigator>
       {displayMenuBar && <MenuBar />}
     </NavigationContainer>

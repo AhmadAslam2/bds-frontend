@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Icon, Avatar } from 'react-native-elements'
 
 import colors from '../config/colors'
@@ -7,7 +7,12 @@ import colors from '../config/colors'
 export default function RequestDiscription({ requestData, userDetails }) {
     return (
         <View style={styles.RequestDetailContainer}>
-            <Avatar rounded title="" style={styles.avatar} />
+            <TouchableOpacity style={{ alignSelf: "flex-end" }}>
+                <Icon name="share-social-outline" type="ionicon" color='white' />
+            </TouchableOpacity>
+            <Avatar rounded
+                // title={userDetails?.firstName[0] + userDetails?.lastName[0]} 
+                style={styles.avatar} />
             <Text style={styles.receiverName}>{userDetails?.firstName} {userDetails?.lastName}</Text>
             <Text style={styles.requestId}>
                 #{Math.floor(Math.random() * 90000) + 10000}

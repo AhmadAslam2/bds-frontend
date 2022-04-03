@@ -114,6 +114,7 @@ export default function SignupScreen() {
                                     style={styles.input}
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
+                                    autoCapitalize="none"
                                     value={values?.email}
                                     inputContainerStyle={{ borderBottomWidth: 0 }}
                                     containerStyle={{ paddingHorizontal: 0 }}
@@ -176,7 +177,7 @@ export default function SignupScreen() {
                                 </Input>
                                 <Text>{errors.password}</Text>
                             </View>
-                            <View style={{ padding: 0 }}>
+                            {/* <View style={{ padding: 0 }}>
                                 <Text style={{ fontSize: 16, fontWeight: "400", paddingBottom: 15 }}>
                                     Verify your Password
                                 </Text>
@@ -194,7 +195,7 @@ export default function SignupScreen() {
                                 </Input>
                                 <Text>{errors.verifyPassword}</Text>
 
-                            </View>
+                            </View> */}
                             <TouchableOpacity style={styles.button}
                                 onPress={handleSubmit}
                             >

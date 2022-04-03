@@ -4,8 +4,9 @@ import { Icon, SearchBar } from 'react-native-elements';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import * as SecureStore from 'expo-secure-store';
 
-import RequestCard from '../Components/RequestCard'
 import { useNavigation } from '@react-navigation/native';
+import NgoCard from '../Components/NgoCard';
+import AndriodSafeAreaView from '../Components/AndriodSafeAreaView';
 
 export default function LandingScreen() {
     const navigation = useNavigation()
@@ -25,7 +26,7 @@ export default function LandingScreen() {
     }
     return (
 
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={{ ...styles.container, ...AndriodSafeAreaView.AndroidSafeArea }}>
             {loading ? <Text>Loading..</Text> : (
                 <>
                     <View style={styles.topBar}>
@@ -43,8 +44,17 @@ export default function LandingScreen() {
                             <Icon name="log-out-outline" type="ionicon" color={"#7D859D"} />
                         </TouchableOpacity>
                     </View>
+                    <View>
+                        <Text style={styles.requestListText}>
+                            NGO List
+                        </Text>
+                    </View>
                     <ScrollView style={styles.requestContainer}>
-                        <Text>SLFKLSJDKLSJ</Text>
+                        <NgoCard />
+                        <NgoCard />
+                        <NgoCard />
+                        <NgoCard />
+                        <NgoCard />
                     </ScrollView>
                 </>
             )}
@@ -66,6 +76,8 @@ const styles = StyleSheet.create({
         color: "#7D859D",
         fontSize: 18,
         fontWeight: "normal",
+        paddingLeft: 25,
+        paddingTop: 5
     },
     topBar: {
         flexDirection: "row",
