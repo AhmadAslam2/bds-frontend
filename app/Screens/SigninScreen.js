@@ -48,7 +48,7 @@ export default function SigninScreen() {
                     </Text>
                 </View>
                 <TouchableOpacity style={styles.sso} onPress={() => {
-                    Alert.alert("Feature coming soon")
+                    Toast.show('feature coming soon')
                 }}>
                     <Icon name="logo-google" type="ionicon" color='#506EDA' />
                     <Text style={{ color: "#4285F4", marginLeft: 13 }}>Sign in with Google</Text>
@@ -56,8 +56,8 @@ export default function SigninScreen() {
 
                 <Formik
                     initialValues={{
-                        email: "ahmadaslam1999@gmail.com",
-                        password: "123123"
+                        email: "",
+                        password: ""
                     }}
                     validationSchema={SignInSchema}
                     onSubmit={async (values) => {

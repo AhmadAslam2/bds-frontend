@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Icon } from 'react-native-elements';
+import Toast from 'react-native-root-toast';
 
 import { me } from '../apis/auth'
 
@@ -41,7 +42,7 @@ export default function ProfilePicture() {
                         <Icon name="mail-outline" type="ionicon" color="#F1908C" size={25} style={{ paddingRight: 10 }} />
                         {userData.email}
                     </Text>
-                    <TouchableOpacity style={styles.editButton}>
+                    <TouchableOpacity style={styles.editButton} onPress={() => { Toast.show("Coming soon") }}>
                         <Text>Edit</Text>
                     </TouchableOpacity>
                 </>

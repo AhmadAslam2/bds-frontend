@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import colors from '../config/colors'
 import { DatePicker } from 'react-native-woodpicker'
 import { confirmDonation, fetchDonation } from '../apis/auth';
-
+import Toast from 'react-native-root-toast';
 
 export default function ConfirmationCard({ navigation, requestData }) {
     const [loading, setLoading] = useState(false)
@@ -53,6 +53,7 @@ export default function ConfirmationCard({ navigation, requestData }) {
                     } catch (error) { console.log("error") }
                     finally {
                         setWaiting(false)
+                        Toast.show("Request Accepted Successfully")
                     }
                     navigation.navigate('ProfileScreen')
                 }}
