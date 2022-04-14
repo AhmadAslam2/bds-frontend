@@ -1,15 +1,34 @@
 import moment from 'moment';
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
 import { Icon } from 'react-native-elements';
+import Toast from 'react-native-root-toast';
+
+import { deleteDonation, fetchUser } from '../apis/auth';
 
 
-export default function ProfileHistoryElement({ navigation, data }) {
+export default function ProfileHistoryElement({ navigation, data, myDonationRequests }) {
     const requestData = data
+    const [userDetails, setUserDetails] = useState({});
+    const [waiting, setWaiting] = useState(false)
+    useEffect(() => {
+        setWaiting(true)
+        const fetchUserDetails = async () => {
+            try {
+                const res = await fetchUser(requestData?.userId);
+                setUserDetails(res?.data?.user)
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setWaiting(false)
+            }
+        }
+        fetchUserDetails()
+    }, [])
     return (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate("RequestDescriptionScreen", { requestData })
+                navigation.navigate("RequestDescriptionScreen", { requestData, userDetails })
             }}
             style={{ flexDirection: 'row', alignItems: "center" }}>
             <View style={styles.element}>
@@ -34,9 +53,29 @@ export default function ProfileHistoryElement({ navigation, data }) {
                 </View>
 
             </View>
-            <View style={{ paddingTop: 25, }}>
-                <Icon name="ellipsis-horizontal-circle-outline" type="ionicon" color="red" size={30} />
+            <View style={{ paddingTop: 25, flexDirection: "row" }}>
 
+                <TouchableOpacity onPress={async () => {
+                    // Alert.alert("This action can not be undone",
+                    //     // [
+                    //     //     {
+                    //     //         text: "Cancel",
+                    //     //         onPress: () => console.log("Cancel Pressed"),
+                    //     //         style: "cancel"
+                    //     //     },
+                    //     //     { text: "OK", onPress: () => console.log("OK Pressed") }
+                    //     // ]
+                    // )
+                    try {
+                        await deleteDonation(requestData._id);
+                        myDonationRequests()
+                        Toast.show("Deleted Successfully")
+                    } catch (error) {
+                        console.log("error while deleting", error)
+                    }
+                }}>
+                    <Icon name="trash-outline" type="ionicon" color="red" size={30} />
+                </TouchableOpacity>
             </View>
         </TouchableOpacity>
     )

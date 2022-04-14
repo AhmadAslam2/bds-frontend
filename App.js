@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Platform, StatusBar } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 import LandingScreen from './app/Screens/LandingScreen';
 import NgoListScreen from './app/Screens/NgoListScreen';
@@ -21,25 +22,27 @@ export default function App() {
 
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenListeners={{
-        state: (e) => {
-          // Do something with the state
-          const index = e.data.state.index
-          const screenName = e.data.state.routes[index].name
-          setActiveScreen(screenName)
-        },
-      }}>
-        <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false, title: "" }} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false, title: "" }} />
-        <Stack.Screen name="LandingScreen" component={LandingScreen} options={{ headerShown: false, title: "" }} />
-        <Stack.Screen name="NgoListScreen" component={NgoListScreen} options={{ headerShown: false, title: "" }} />
-        <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ headerShown: true, title: "" }} />
-        <Stack.Screen name="RequestDescriptionScreen" component={RequestDiscriptionScreen} options={{ headerShown: true, title: "" }} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false, title: "" }} />
-      </Stack.Navigator>
-      {displayMenuBar && <MenuBar />}
-    </NavigationContainer>
+    <RootSiblingParent>
+      <NavigationContainer>
+        <Stack.Navigator screenListeners={{
+          state: (e) => {
+            // Do something with the state
+            const index = e.data.state.index
+            const screenName = e.data.state.routes[index].name
+            setActiveScreen(screenName)
+          },
+        }}>
+          <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false, title: "" }} />
+          <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false, title: "" }} />
+          <Stack.Screen name="LandingScreen" component={LandingScreen} options={{ headerShown: false, title: "" }} />
+          <Stack.Screen name="NgoListScreen" component={NgoListScreen} options={{ headerShown: false, title: "" }} />
+          <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ headerShown: true, title: "" }} />
+          <Stack.Screen name="RequestDescriptionScreen" component={RequestDiscriptionScreen} options={{ headerShown: true, title: "" }} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false, title: "" }} />
+        </Stack.Navigator>
+        {displayMenuBar && <MenuBar />}
+      </NavigationContainer>
+    </RootSiblingParent>
   );
 }
 const styles = StyleSheet.create({

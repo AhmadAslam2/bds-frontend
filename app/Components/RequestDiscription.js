@@ -1,21 +1,32 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Icon, Avatar } from 'react-native-elements'
+import * as Clipboard from 'expo-clipboard';
+import Toast from 'react-native-root-toast';
 
 import colors from '../config/colors'
 
 export default function RequestDiscription({ requestData, userDetails }) {
+    const copyToClipboard = (string) => {
+        Clipboard.setString(string);
+    };
+    let avatarTitle = `${userDetails && userDetails?.firstName && userDetails.firstName[0] ? userDetails?.firstName[0]
+        : "-"}${userDetails && userDetails?.lastName && userDetails?.lastName[0] ? userDetails?.lastName[0] : "-"}`
+
+    const shareString = userDetails?.firstName + " " + userDetails?.lastName + "\nBlood Group: " + requestData?.bloodType + "\nContact: " + userDetails?.contactNumber
     return (
         <View style={styles.RequestDetailContainer}>
-            <TouchableOpacity style={{ alignSelf: "flex-end" }}>
-                <Icon name="share-social-outline" type="ionicon" color='white' />
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+                <TouchableOpacity onPress={() => { copyToClipboard(shareString), Toast.show("Copied to clipboard") }}>
+                    <Icon name="share-social-outline" type="ionicon" color='white' />
+                </TouchableOpacity>
+            </View>
             <Avatar rounded
-                // title={userDetails?.firstName[0] + userDetails?.lastName[0]} 
+                title={avatarTitle}
                 style={styles.avatar} />
             <Text style={styles.receiverName}>{userDetails?.firstName} {userDetails?.lastName}</Text>
             <Text style={styles.requestId}>
-                #{Math.floor(Math.random() * 90000) + 10000}
+                #{requestData?._id.slice(0, 5)}
             </Text>
             <Text style={styles.RequestDetail}>
                 {requestData?.description || "N/A"}

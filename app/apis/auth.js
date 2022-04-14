@@ -34,6 +34,15 @@ export const fetchDonation = async (id) => {
     return await instance.get(`/donationRequest/${id}`)
 }
 
+
+export const deleteDonation = async (id) => {
+    return await instance.delete(`/donationRequest/${id}`, {
+        headers: {
+            "authorization": await getFromStorage("token")
+        }
+    })
+}
+
 export const confirmDonation = async (id) => {
     return await instance.put(`/confirm/donationRequest/${id}`, {}, {
         headers: {

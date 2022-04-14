@@ -19,11 +19,6 @@ export default function LandingScreen() {
     const updateSearch = (search) => {
         setSearch(search);
     };
-    const signOut = () => {
-        SecureStore.deleteItemAsync('token').then(
-            navigation.navigate('SigninScreen')
-        );
-    }
     return (
 
         <SafeAreaView style={{ ...styles.container, ...AndriodSafeAreaView.AndroidSafeArea }}>
@@ -40,9 +35,6 @@ export default function LandingScreen() {
                             inputContainerStyle={{ backgroundColor: "white", width: "100%", height: 30, }}
                             lightTheme
                         />
-                        <TouchableOpacity style={{ alignSelf: "center" }} onPress={signOut}  >
-                            <Icon name="log-out-outline" type="ionicon" color={"#7D859D"} />
-                        </TouchableOpacity>
                     </View>
                     <View>
                         <Text style={styles.requestListText}>

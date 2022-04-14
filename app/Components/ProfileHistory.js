@@ -53,7 +53,8 @@ export default function ProfileHistory({ navigation }) {
             <ScrollView style={styles.profileHistoryContainer}>
                 {
                     donations?.map((dh, index) => {
-                        return <ProfileHistoryElement navigation={navigation} data={dh} key={index} />
+                        return <ProfileHistoryElement myDonationRequests={_myDonationRequests
+                        } navigation={navigation} data={dh} key={index} />
                     })
                 }
             </ScrollView>

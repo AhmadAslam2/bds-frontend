@@ -65,7 +65,10 @@ export default function SignupScreen() {
                             setLoading(false)
                             navigation.navigate('LandingScreen')
 
-                        } catch (error) { console.log("error", error) }
+                        } catch (error) {
+                            Alert.alert("Something went wrong")
+                            setLoading(false)
+                        }
                     }}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
@@ -200,7 +203,7 @@ export default function SignupScreen() {
                                 onPress={handleSubmit}
                             >
                                 <Text style={styles.buttonText}>
-                                    Sign up
+                                    {loading ? "Please wait.." : "Sign up"}
                                 </Text>
                             </TouchableOpacity>
                         </>

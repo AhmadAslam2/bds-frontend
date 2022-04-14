@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
-
+import Toast from 'react-native-root-toast';
 
 import ProfileHistory from '../Components/ProfileHistory'
 import ProfilePicture from '../Components/ProfilePicture'
@@ -31,6 +31,7 @@ export default function ProfileScreen() {
         SecureStore.deleteItemAsync('token').then(
             navigation?.navigate('SigninScreen')
         );
+        Toast.show("Signed out successfully")
     }
 
     if (checkingIsLoggedIn) {

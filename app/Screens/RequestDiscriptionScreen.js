@@ -1,26 +1,25 @@
 import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, StatusBar, Linking } from 'react-native'
 import { Icon } from 'react-native-elements';
-// import Clipboard from 'expo-clipboard';
+
 
 import RequestDiscription from '../Components/RequestDiscription';
 import RequestDiscriptionAmount from '../Components/RequestDiscriptionAmount';
 import colors from '../config/colors'
 import { useNavigation, useRoute } from '@react-navigation/native';
-
+import { callNumber } from '../utils';
+import * as Clipboard from 'expo-clipboard';
+import Toast from 'react-native-root-toast';
 
 export default function RequestDiscriptionScreen() {
+    const copyToClipboard = (string) => {
+        Clipboard.setString(string);
+    };
     const route = useRoute()
     const navigation = useNavigation()
     const requestData = route?.params?.requestData
     const userDetails = route?.params?.userDetails
-    // const args = {
-    //     number: '//0321-4324862', // String value with the number to call
-    //     prompt: true // Optional boolean property. Determines if the user should be prompt prior to the call 
-    // }
-    // const copyToClipboard = () => {
-    //     Clipboard.setString("value");
-    // };
+    const phoneNumber = userDetails?.contactNumber
     return (
 
         <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
@@ -30,13 +29,18 @@ export default function RequestDiscriptionScreen() {
             <View style={styles.weirdPadding}>
                 <RequestDiscriptionAmount requestData={route?.params.requestData} />
             </View>
-            <TouchableOpacity style={styles.contactNumberContainer}>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity style={styles.contactNumberContainer} onPress={() => { callNumber(phoneNumber) }}>
 
-                <Icon name="call" type="ionicon" color="#2cfa1c" size={25} style={{ paddingRight: 10 }} />
-                <Text style={{ color: "white", fontSize: 25 }}>
-                    {userDetails?.contactNumber}
-                </Text>
-            </TouchableOpacity>
+                    <Icon name="call" type="ionicon" color="#2cfa1c" size={25} style={{ paddingRight: 10 }} />
+                    <Text style={{ color: "white", fontSize: 25 }}>
+                        {userDetails?.contactNumber}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { copyToClipboard(phoneNumber), Toast.show("Copied to clipboard") }}>
+                    <Icon name="clipboard-outline" type="ionicon" color="black" size={25} />
+                </TouchableOpacity>
+            </View>
             <View style={styles.weirdPadding}>
                 <TouchableOpacity style={styles.button}
                     onPress={() => navigation?.navigate('ConfirmationScreen', { requestData })}>

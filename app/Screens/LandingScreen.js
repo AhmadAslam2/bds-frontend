@@ -7,11 +7,14 @@ import * as SecureStore from 'expo-secure-store';
 import LocationCard from '../Components/LocationCard'
 import RequestCard from '../Components/RequestCard'
 import { donationRequests } from '../apis/auth';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useNavigation, useIsFocused, useRoute } from '@react-navigation/native';
 import AndriodSafeAreaView from '../Components/AndriodSafeAreaView';
+import Toast from 'react-native-root-toast';
 
 export default function LandingScreen() {
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const route = useRoute()
+    const changedAt = route?.params?.changedAt
     const isFocused = useIsFocused();
     const [filterType, setFilterType] = useState("all")
     const [loading, setLoading] = useState(false)
@@ -22,7 +25,6 @@ export default function LandingScreen() {
             const fetchDonationRequest = async () => {
                 try {
                     const res = await donationRequests(filterType)
-                    // console.log(res)
                     setDonationRequest(res.data?.donationRequests)
                     setLoading(false)
                 } catch (error) {
@@ -33,11 +35,12 @@ export default function LandingScreen() {
             }
             fetchDonationRequest()
         }
-    }, [isFocused, filterType])
+    }, [isFocused, filterType, changedAt])
     const signOut = () => {
         SecureStore.deleteItemAsync('token').then(
             navigation?.navigate('SigninScreen')
         );
+        Toast.show("Signed out successfully")
     }
     return (
 
@@ -53,7 +56,7 @@ export default function LandingScreen() {
                 </View>
                 <LocationCard setFilterType={setFilterType} />
                 <ScrollView style={styles.requestContainer}>
-                    {loading ? <Text>Loading..</Text> : <>
+                    {loading ? <Text style={{ alignSelf: "center", fontSize: 20 }}>Loading..</Text> : <>
                         {donationRequest?.reverse().map((rq, index) => {
                             return (
                                 <RequestCard requestData={rq} navigation={navigation} key={index} />

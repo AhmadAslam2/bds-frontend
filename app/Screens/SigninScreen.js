@@ -1,12 +1,14 @@
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Alert } from 'react-native'
 import { Icon, Input } from 'react-native-elements'
 import colors from '../config/colors'
 import * as Yup from 'yup';
 import { signin } from '../apis/auth'
 import { saveInStorage } from '../utils'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import Toast from 'react-native-root-toast';
+
 
 const SignInSchema = Yup.object().shape({
     password: Yup.string()
@@ -45,15 +47,17 @@ export default function SigninScreen() {
                         Sing in
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.sso}>
+                <TouchableOpacity style={styles.sso} onPress={() => {
+                    Alert.alert("Feature coming soon")
+                }}>
                     <Icon name="logo-google" type="ionicon" color='#506EDA' />
                     <Text style={{ color: "#4285F4", marginLeft: 13 }}>Sign in with Google</Text>
                 </TouchableOpacity>
 
                 <Formik
                     initialValues={{
-                        email: "",
-                        password: ""
+                        email: "ahmadaslam1999@gmail.com",
+                        password: "123123"
                     }}
                     validationSchema={SignInSchema}
                     onSubmit={async (values) => {
@@ -63,7 +67,14 @@ export default function SigninScreen() {
                             await saveInStorage("token", res?.data?.token)
                             setLoading(false)
                             navigation.navigate('LandingScreen')
-                        } catch (error) { console.log("error", error) }
+                            Toast.show("Signed in successfully")
+                        } catch (error) {
+
+                            Alert.alert("Incorrect email or password")
+                            setLoading(false)
+
+                        }
+
                     }}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
@@ -73,7 +84,7 @@ export default function SigninScreen() {
                                     Enter your Username or email address
                                 </Text>
                                 <Input
-                                    placeholder="Username or Email"
+                                    placeholder={"Username or Email"}
                                     textContentType="emailAddress"
                                     style={styles.input}
                                     onChangeText={handleChange('email')}
@@ -85,7 +96,7 @@ export default function SigninScreen() {
                                     autoCorrect={false}
                                 >
                                 </Input>
-                                <Text>{errors.email}</Text>
+                                <Text style={{ color: "red" }}>{errors.email}</Text>
                             </View>
 
                             <View style={{ padding: 0 }}>
@@ -104,7 +115,7 @@ export default function SigninScreen() {
                                     containerStyle={{ paddingHorizontal: 0, margin: 0 }}
                                 >
                                 </Input>
-                                <Text>{errors.password}</Text>
+                                <Text style={{ color: "red" }}>{errors.password}</Text>
                                 <TouchableOpacity style={{ alignSelf: "flex-end" }}>
                                     <Text style={{ fontSize: 11, color: "#4285F4" }}>
                                         Forgot Password
@@ -118,7 +129,7 @@ export default function SigninScreen() {
                                 }
                             >
                                 <Text style={styles.buttonText}>
-                                    Sign in
+                                    {loading ? "Please wait..." : "Sign in"}
                                 </Text>
                             </TouchableOpacity>
                         </>

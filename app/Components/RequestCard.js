@@ -24,6 +24,9 @@ export default function RequestCard({ navigation, requestData }) {
         }
         fetchUserDetails()
     }, [])
+    let avatarTitle = `${userDetails && userDetails?.firstName && userDetails.firstName[0] ? userDetails?.firstName[0]
+        : "-"}${userDetails && userDetails?.lastName && userDetails?.lastName[0] ? userDetails?.lastName[0] : "-"}`
+
     return (
         <TouchableOpacity onPress={() => navigation.navigate('RequestDescriptionScreen', {
             requestData,
@@ -33,7 +36,7 @@ export default function RequestCard({ navigation, requestData }) {
                 <View style={styles.requestLocation}>
                     <Avatar
                         rounded
-                        title={waiting ? '--' : userDetails.firstName}
+                        title={waiting ? '--' : avatarTitle}
                         style={styles.avatar} />
                     <Text style={styles.receiverName}>{waiting ? '--' : userDetails?.firstName} {waiting ? '--' : userDetails?.lastName}</Text>
                     <View style={styles.hospitalInfo}>

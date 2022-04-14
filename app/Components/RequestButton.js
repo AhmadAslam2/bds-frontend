@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Text, Alert } from 'react-native'
 import { Icon, Overlay, Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import { Picker } from 'react-native-woodpicker'
+import * as Yup from 'yup';
+import Toast from 'react-native-root-toast';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 import colors from '../config/colors'
 import { postRequest } from '../apis/auth';
@@ -12,6 +17,7 @@ export default function RequestButton({ setLoading }) {
     const toggleOverlay = () => {
         setVisible(!visible);
     };
+    const navigation = useNavigation()
     const [pickedData, setPickedData] = useState("A+");
     const data = [
         { label: "A+", value: "A+", },
@@ -23,6 +29,12 @@ export default function RequestButton({ setLoading }) {
         { label: "AB+", value: "AB+", },
         { label: "AB-", value: "AB-", },
     ]
+    const requestSchema = Yup.object().shape({
+        location: Yup.string().required('Required'),
+        amountNeeded: Yup.number().required('Required'),
+        diagnosis: Yup.string().required('Required'),
+        bloodType: Yup.string().required('Required'),
+    });
     return (
         <TouchableOpacity style={styles.requestBoton}>
             <TouchableOpacity style={{ width: '100%', height: '100%' }} onPress={toggleOverlay} >
@@ -39,6 +51,10 @@ export default function RequestButton({ setLoading }) {
                         diagnosis: "",
                         bloodType: ""
                     }}
+                    validationSchema={requestSchema}
+                    validateOnChange={(d) => {
+                        console.log(d)
+                    }}
                     onSubmit={async values => {
                         try {
                             setLoading && setLoading(true);
@@ -51,11 +67,13 @@ export default function RequestButton({ setLoading }) {
                             console.log(error)
                         } finally {
                             setLoading && setLoading(false)
+                            Toast.show("Request posted successfully")
+                            navigation.navigate('LandingScreen', { changedAt: Date.now() })
 
                         }
                     }}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
+                    {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors }) => (
                         <View style={styles.Overlay}>
                             <Input placeholder="Location*"
                                 onChangeText={handleChange('location')}
@@ -64,7 +82,6 @@ export default function RequestButton({ setLoading }) {
                                 autoCorrect={false}
 
                             />
-
                             <Text style={{ fontSize: 18, fontWeight: '600' }}>Choose Amount and Type</Text>
                             <View style={styles.amountAndTypeContainer}>
                                 <View style={{ width: 100 }}>
@@ -75,6 +92,7 @@ export default function RequestButton({ setLoading }) {
                                         autoCorrect={false}
                                         containerStyle={{ marginBottom: 0 }}
                                     />
+
                                 </View>
                                 <View style={{ width: 85 }}>
                                     <Picker
@@ -104,7 +122,15 @@ export default function RequestButton({ setLoading }) {
                                 value={values.description} placeholder="Description(optional)"
                                 autoCorrect={false}
                             />
-                            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                            <TouchableOpacity style={styles.button}
+                                onPress={() => {
+                                    if (Object.keys(errors).length) {
+                                        Alert.alert("Invalid Input")
+                                    }
+                                    else {
+                                        handleSubmit()
+                                    }
+                                }}>
                                 <Text style={styles.buttonText}>
                                     Submit
                                 </Text>
