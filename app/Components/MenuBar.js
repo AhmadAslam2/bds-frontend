@@ -16,8 +16,8 @@ export default function MenuBar({ setLoading }) {
                 }}>
                     <Icon name="home" type="ionicon" color={activeTab === "home" ? "#3880ff" : 'grey'} />
                 </TouchableOpacity>
-                <TouchableOpacity >
-                    <Icon name="notifications" type="ionicon" color={activeTab === "notification" ? "#3880ff" : 'grey'} />
+                <TouchableOpacity onPress={() => { navigation?.navigate('MessageScreen') }}>
+                    <Icon name="chatbubbles" type="ionicon" color={activeTab === "notification" ? "#3880ff" : 'grey'} />
                 </TouchableOpacity>
             </View>
             <View style={styles.div2}>

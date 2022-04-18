@@ -40,9 +40,9 @@ export default function ProfileHistory({ navigation }) {
     return (
         <>
             <View>
-                <TouchableOpacity onPress={ () => navigation.navigate('MessageScreen') } >
+                {/* <TouchableOpacity onPress={ () => navigation.navigate('MessageScreen') } >
                     <Text>Chats</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
             <View style={styles.buttons}>
                 <TouchableOpacity onPress={() => { setActiveTab("requests"); _myDonationRequests() }}>
