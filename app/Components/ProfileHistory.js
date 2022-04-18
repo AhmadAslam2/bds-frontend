@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import { myDonationRequests, myDonations } from '../apis/auth'
-import ProfileHistoryElement from './ProfileHistoryElement'
+import ProfileHistoryElement from './ProfileHistoryElement';
+
 
 export default function ProfileHistory({ navigation }) {
     const [acitveTab, setActiveTab] = useState("requests")
@@ -38,6 +39,11 @@ export default function ProfileHistory({ navigation }) {
 
     return (
         <>
+            <View>
+                <TouchableOpacity onPress={ () => navigation.navigate('MessageScreen') } >
+                    <Text>Chats</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.buttons}>
                 <TouchableOpacity onPress={() => { setActiveTab("requests"); _myDonationRequests() }}>
                     <Text style={{ ...styles.requests, ...additionalRequestTextStyles }}>
