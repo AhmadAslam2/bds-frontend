@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, StatusBar, Linking } from 'react-native'
 import { Icon } from 'react-native-elements';
 
@@ -13,7 +13,6 @@ import Toast from 'react-native-root-toast';
 import { me } from '../apis/auth';
 
 export default function RequestDiscriptionScreen() {
-    const [currentUser, setCurrentUser]= useState({})
     const copyToClipboard = (string) => {
         Clipboard.setString(string);
     };
@@ -22,20 +21,6 @@ export default function RequestDiscriptionScreen() {
     const requestData = route?.params?.requestData
     const userDetails = route?.params?.userDetails
     const phoneNumber = userDetails?.contactNumber
-    const item =userDetails
-
-
-    const fetchCurrentUser = async () => {
-        try {
-            const res = await me()
-            setCurrentUser(res.data.user,
-            ) 
-    
-        } catch (error) {
-            console.log("error", error)
-        }
-        }
-    fetchCurrentUser()
     return (
 
         <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
@@ -57,10 +42,10 @@ export default function RequestDiscriptionScreen() {
                     <Icon name="clipboard-outline" type="ionicon" color="black" size={25} />
                 </TouchableOpacity>
             </View>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => navigation.navigate('ChatScreen',{currentUser,item})}>
-                <Text>Chat</Text>
-            </TouchableOpacity>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <TouchableOpacity >
+                    <Text>Chat</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.weirdPadding}>
                 <TouchableOpacity style={styles.button}

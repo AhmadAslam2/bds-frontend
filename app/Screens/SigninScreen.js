@@ -6,7 +6,7 @@ import colors from '../config/colors'
 import * as Yup from 'yup';
 import { signin } from '../apis/auth'
 import { saveInStorage } from '../utils'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import Toast from 'react-native-root-toast';
 
 
@@ -56,8 +56,8 @@ export default function SigninScreen() {
 
                 <Formik
                     initialValues={{
-                        email: "2017n1191@gmail.com",
-                        password: "1234567"
+                        email: "",
+                        password: ""
                     }}
                     validationSchema={SignInSchema}
                     onSubmit={async (values) => {
@@ -123,7 +123,7 @@ export default function SigninScreen() {
                                 </TouchableOpacity>
                             </View>
 
-                            <TouchableOpacity style={styles.button}
+                            <TouchableOpacity disabled={loading} style={{ ...styles.button, backgroundColor: `${loading ? "grey" : "#F1908C"}` }}
                                 onPress={
                                     handleSubmit
                                 }

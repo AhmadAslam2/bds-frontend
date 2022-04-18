@@ -199,7 +199,7 @@ export default function SignupScreen() {
                                 <Text>{errors.verifyPassword}</Text>
 
                             </View> */}
-                            <TouchableOpacity style={styles.button}
+                            <TouchableOpacity disabled={loading} style={{ ...styles.button, backgroundColor: `${loading ? "grey" : "#F1908C"}` }}
                                 onPress={handleSubmit}
                             >
                                 <Text style={styles.buttonText}>
