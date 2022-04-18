@@ -10,6 +10,7 @@ import colors from '../config/colors'
 export default function ProfilePicture() {
     const [loading, setLoading] = useState(false)
     const [userData, setUserData] = useState({})
+       
     useEffect(() => {
         const fetchCurrentUser = async () => {
             try {

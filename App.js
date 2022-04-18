@@ -3,7 +3,7 @@ import { StyleSheet, Platform, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootSiblingParent } from 'react-native-root-siblings';
-
+import MessageScreen from './app/Screens/MessageScreen';
 import LandingScreen from './app/Screens/LandingScreen';
 import NgoListScreen from './app/Screens/NgoListScreen';
 import ConfirmationScreen from './app/Screens/ConfirmationScreen';
@@ -12,9 +12,10 @@ import ProfileScreen from './app/Screens/ProfileScreen';
 import SigninScreen from './app/Screens/SigninScreen';
 import SignupScreen from './app/Screens/SignupScreen';
 import MenuBar from './app/Components/MenuBar';
+import ChatScreen from './app/Screens/ChatScreen';
 
 const Stack = createNativeStackNavigator();
-const hideMenuBarOn = ["RequestDescriptionScreen", "SignupScreen", "SigninScreen"]
+const hideMenuBarOn = ["RequestDescriptionScreen", "SignupScreen", "SigninScreen","MessageScreen","ChatScreen"]
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState()
@@ -39,6 +40,8 @@ export default function App() {
           <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ headerShown: true, title: "" }} />
           <Stack.Screen name="RequestDescriptionScreen" component={RequestDiscriptionScreen} options={{ headerShown: true, title: "" }} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false, title: "" }} />
+          <Stack.Screen name="MessageScreen" component={MessageScreen} options={{ headerShown: true, title: "Recent Chats" }} />
+          <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: true, title: "" }} />
         </Stack.Navigator>
         {displayMenuBar && <MenuBar />}
       </NavigationContainer>
