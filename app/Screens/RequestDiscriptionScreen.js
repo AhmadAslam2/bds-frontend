@@ -22,8 +22,9 @@ export default function RequestDiscriptionScreen() {
     const userDetails = route?.params?.userDetails
     const phoneNumber = userDetails?.contactNumber
     return (
-        <ScrollView>
-            <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
+
+        <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
+            <ScrollView>
                 <TouchableOpacity
                     style={{ marginLeft: 25 }}
                     onPress={() => { navigation?.navigate('LandingScreen') }}>
@@ -55,8 +56,8 @@ export default function RequestDiscriptionScreen() {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </SafeAreaView>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
