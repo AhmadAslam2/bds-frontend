@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, StatusBar, Linking } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, StatusBar, ScrollView } from 'react-native'
 import { Icon } from 'react-native-elements';
 
 
@@ -22,40 +22,41 @@ export default function RequestDiscriptionScreen() {
     const userDetails = route?.params?.userDetails
     const phoneNumber = userDetails?.contactNumber
     return (
+        <ScrollView>
+            <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
+                <TouchableOpacity
+                    style={{ marginLeft: 25 }}
+                    onPress={() => { navigation?.navigate('LandingScreen') }}>
+                    <Text style={{ color: "white" }}> {"Home"}</Text>
+                </TouchableOpacity>
+                <View style={{ ...styles.weirdPadding, paddingTop: 0 }}>
+                    <RequestDiscription userDetails={userDetails} requestData={route?.params.requestData} />
+                </View>
+                <View style={styles.weirdPadding}>
+                    <RequestDiscriptionAmount requestData={route?.params.requestData} />
+                </View>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                    <TouchableOpacity style={styles.contactNumberContainer} onPress={() => { callNumber(phoneNumber) }}>
 
-        <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
-            <TouchableOpacity
-                style={{ marginLeft: 25 }}
-                onPress={() => { navigation?.navigate('LandingScreen') }}>
-                <Text style={{ color: "white" }}> {"Home"}</Text>
-            </TouchableOpacity>
-            <View style={{ ...styles.weirdPadding, paddingTop: 0 }}>
-                <RequestDiscription userDetails={userDetails} requestData={route?.params.requestData} />
-            </View>
-            <View style={styles.weirdPadding}>
-                <RequestDiscriptionAmount requestData={route?.params.requestData} />
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                <TouchableOpacity style={styles.contactNumberContainer} onPress={() => { callNumber(phoneNumber) }}>
-
-                    <Icon name="call" type="ionicon" color="#2cfa1c" size={25} style={{ paddingRight: 10 }} />
-                    <Text style={{ color: "white", fontSize: 25 }}>
-                        {userDetails?.contactNumber}
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { copyToClipboard(phoneNumber), Toast.show("Copied to clipboard") }}>
-                    <Icon name="clipboard-outline" type="ionicon" color="black" size={25} />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.weirdPadding}>
-                <TouchableOpacity style={styles.button}
-                    onPress={() => navigation?.navigate('ConfirmationScreen', { requestData })}>
-                    <Text style={styles.buttonText}>
-                        Accept
-                    </Text>
-                </TouchableOpacity>
-            </View>
-        </SafeAreaView>
+                        <Icon name="call" type="ionicon" color="#2cfa1c" size={25} style={{ paddingRight: 10 }} />
+                        <Text style={{ color: "white", fontSize: 25 }}>
+                            {userDetails?.contactNumber}
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { copyToClipboard(phoneNumber), Toast.show("Copied to clipboard") }}>
+                        <Icon name="clipboard-outline" type="ionicon" color="black" size={25} />
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.weirdPadding}>
+                    <TouchableOpacity style={styles.button}
+                        onPress={() => navigation?.navigate('ConfirmationScreen', { requestData })}>
+                        <Text style={styles.buttonText}>
+                            Accept
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        </ScrollView>
     )
 }
 
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primary,
         flex: 1,
         flexDirection: "column",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
     },
     topBar: {
         width: '100%',
