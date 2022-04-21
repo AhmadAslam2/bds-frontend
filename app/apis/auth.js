@@ -33,7 +33,11 @@ export const postRequest = async (payload) => {
 }
 
 export const fetchDonation = async (id) => {
-    return await instance.get(`/donationRequest/${id}`)
+    return await instance.get(`/donationRequest/${id}`, {
+        headers: {
+            "authorization": await getFromStorage("token")
+        }
+    })
 }
 
 

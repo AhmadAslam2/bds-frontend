@@ -24,7 +24,12 @@ export default function RequestDiscriptionScreen() {
     return (
 
         <SafeAreaView style={{ ...styles.discriptionContainer, ...styles.AndroidSafeArea }}>
-            <View style={styles.weirdPadding}>
+            <TouchableOpacity
+                style={{ marginLeft: 25 }}
+                onPress={() => { navigation?.navigate('LandingScreen') }}>
+                <Text style={{ color: "white" }}> {"Home"}</Text>
+            </TouchableOpacity>
+            <View style={{ ...styles.weirdPadding, paddingTop: 0 }}>
                 <RequestDiscription userDetails={userDetails} requestData={route?.params.requestData} />
             </View>
             <View style={styles.weirdPadding}>
@@ -40,11 +45,6 @@ export default function RequestDiscriptionScreen() {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { copyToClipboard(phoneNumber), Toast.show("Copied to clipboard") }}>
                     <Icon name="clipboard-outline" type="ionicon" color="black" size={25} />
-                </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableOpacity >
-                    <Text>Chat</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.weirdPadding}>
