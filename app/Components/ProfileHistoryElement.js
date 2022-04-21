@@ -7,7 +7,7 @@ import Toast from 'react-native-root-toast';
 import { deleteDonation, fetchUser } from '../apis/auth';
 
 
-export default function ProfileHistoryElement({ navigation, data, myDonationRequests }) {
+export default function ProfileHistoryElement({ navigation, data, myDonationRequests, activeTab }) {
     const requestData = data
     const [userDetails, setUserDetails] = useState({});
     const [waiting, setWaiting] = useState(false)
@@ -25,11 +25,13 @@ export default function ProfileHistoryElement({ navigation, data, myDonationRequ
         }
         fetchUserDetails()
     }, [])
+
     return (
         <TouchableOpacity
             onPress={() => {
                 navigation.navigate("RequestDescriptionScreen", { requestData, userDetails })
             }}
+
             style={{ flexDirection: 'row', alignItems: "center" }}>
             <View style={styles.element}>
                 <View style={styles.dateContainer}>
@@ -55,17 +57,7 @@ export default function ProfileHistoryElement({ navigation, data, myDonationRequ
             </View>
             <View style={{ paddingTop: 25, flexDirection: "row" }}>
 
-                <TouchableOpacity onPress={async () => {
-                    // Alert.alert("This action can not be undone",
-                    //     // [
-                    //     //     {
-                    //     //         text: "Cancel",
-                    //     //         onPress: () => console.log("Cancel Pressed"),
-                    //     //         style: "cancel"
-                    //     //     },
-                    //     //     { text: "OK", onPress: () => console.log("OK Pressed") }
-                    //     // ]
-                    // )
+                {activeTab === "requests" ? <TouchableOpacity onPress={async () => {
                     try {
                         await deleteDonation(requestData._id);
                         myDonationRequests()
@@ -75,7 +67,8 @@ export default function ProfileHistoryElement({ navigation, data, myDonationRequ
                     }
                 }}>
                     <Icon name="trash-outline" type="ionicon" color="red" size={30} />
-                </TouchableOpacity>
+
+                </TouchableOpacity> : <></>}
             </View>
         </TouchableOpacity>
     )

@@ -15,7 +15,7 @@ import MenuBar from './app/Components/MenuBar';
 import ChatScreen from './app/Screens/ChatScreen';
 
 const Stack = createNativeStackNavigator();
-const hideMenuBarOn = ["RequestDescriptionScreen", "SignupScreen", "SigninScreen","MessageScreen","ChatScreen"]
+const hideMenuBarOn = ["RequestDescriptionScreen", "SignupScreen", "SigninScreen", "MessageScreen", "ChatScreen"]
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState()
@@ -37,8 +37,8 @@ export default function App() {
           <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false, title: "" }} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} options={{ headerShown: false, title: "" }} />
           <Stack.Screen name="NgoListScreen" component={NgoListScreen} options={{ headerShown: false, title: "" }} />
-          <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ headerShown: true, title: "" }} />
-          <Stack.Screen name="RequestDescriptionScreen" component={RequestDiscriptionScreen} options={{ headerShown: true, title: "" }} />
+          <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{ headerShown: false, title: "" }} />
+          <Stack.Screen name="RequestDescriptionScreen" component={RequestDiscriptionScreen} options={{ headerShown: false, title: "" }} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false, title: "" }} />
           <Stack.Screen name="MessageScreen" component={MessageScreen} options={{ headerShown: true, title: "Recent Chats" }} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: true, title: "" }} />

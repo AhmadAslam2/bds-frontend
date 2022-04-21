@@ -5,11 +5,11 @@ import ProfileHistoryElement from './ProfileHistoryElement';
 
 
 export default function ProfileHistory({ navigation }) {
-    const [acitveTab, setActiveTab] = useState("requests")
+    const [activeTab, setActiveTab] = useState("requests")
     const [donations, setDonations] = useState([])
     const [loading, setLoading] = useState([])
-    const additionalDonationTextStyles = acitveTab === 'donations' ? styles.active : styles.regular
-    const additionalRequestTextStyles = acitveTab === 'requests' ? styles.active : styles.regular
+    const additionalDonationTextStyles = activeTab === 'donations' ? styles.active : styles.regular
+    const additionalRequestTextStyles = activeTab === 'requests' ? styles.active : styles.regular
     const _myDonationRequests = async () => {
         try {
             setLoading(true)
@@ -60,7 +60,7 @@ export default function ProfileHistory({ navigation }) {
                 {
                     donations?.map((dh, index) => {
                         return <ProfileHistoryElement myDonationRequests={_myDonationRequests
-                        } navigation={navigation} data={dh} key={index} />
+                        } navigation={navigation} data={dh} key={index} activeTab={activeTab} />
                     })
                 }
             </ScrollView>

@@ -11,10 +11,11 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 export default function ConfirmationScreen() {
     const navigation = useNavigation()
     const route = useRoute()
+    const requestData = route?.params?.requestData
     return (
         <SafeAreaView style={{ ...styles.container, ...AndriodSafeAreaView.AndroidSafeArea }}>
-            <LocationMap />
-            <ConfirmationCard requestData={route?.params.requestData} navigation={navigation} />
+            <LocationMap requestData={requestData} />
+            <ConfirmationCard requestData={requestData} navigation={navigation} />
         </SafeAreaView>
     )
 }

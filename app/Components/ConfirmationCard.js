@@ -24,10 +24,10 @@ export default function ConfirmationCard({ navigation, requestData }) {
         const fetchDonationRequest = async () => {
             try {
                 setLoading(true)
-                const res = await fetchDonation(requestData._id);
+                const res = await fetchDonation(requestData?._id);
                 setDonation(res?.data?.donation)
             } catch (error) {
-                console.log("Error", error)
+                console.log("Errorrrrr::::", error)
             } finally {
                 setLoading(false)
             }

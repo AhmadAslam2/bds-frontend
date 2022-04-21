@@ -56,8 +56,8 @@ export default function RequestDiscription({ requestData, userDetails }) {
 
 const styles = StyleSheet.create({
     avatar: {
-        width: 100,
-        height: 100,
+        width: 60,
+        height: 60,
         backgroundColor: colors.secondary,
         borderRadius: 100
     },
