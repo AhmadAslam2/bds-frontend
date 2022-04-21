@@ -1,19 +1,54 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements';
-
 import colors from '../config/colors'
+import { addMember } from '../apis/auth';
+import {me} from  '../apis/auth';
 
-export default function locationCard() {
+export default function locationCard(requestData,navigation) {
+    const [currentUser, setCurrentUser] = useState({})
+    const fetchCurrentUser = async () => {
+        try {
+          const res = await me()
+          setCurrentUser(res.data.user,
+          )
+          //console.log(currentUser)
+    
+        } catch (error) {
+          console.log("error", error)
+        }
+      }
+
+      const addUser=async () => {
+        try {
+            // console.log(requestData.requestData._id)
+            // console.log(currentUser)
+            const res = await addMember(currentUser)
+            // console.log("here")
+
+        } catch (error) {
+            console.log(error)
+        }
+     }
+
+
+      useEffect(() => {
+        // addUser()
+        fetchCurrentUser()
+    
+      }, [])
+
+
+
     return (
         <>
             <View style={styles.ngoCard}>
 
-                <Text style={{ ...styles.city, paddingBottom: 10 }}>Sundas Foundation</Text>
+                <Text style={{ ...styles.city, paddingBottom: 10 }}>{requestData.requestData.name}</Text>
                 <Text style={styles.locationText}>Location</Text>
                 <View style={styles.location}>
                     <Text style={styles.city}>
-                        Lahore
+                       { requestData.location}
                     </Text>
                     <Text>
                         <Icon name="location" type="ionicon" color={colors.secondary} />
@@ -24,12 +59,12 @@ export default function locationCard() {
                     <Text style={styles.popularity}>
                         Popularity:
                         <Text style={{ ...styles.popularity, color: "#506EDA", fontWeight: "bold" }}>
-                            430
+                            {requestData.requestData.members.length}
                         </Text>
                     </Text>
-                    <TouchableOpacity style={{ alignSelf: "center" }}>
+                    <TouchableOpacity style={{ alignSelf: "center" }} onPress={addUser}
+                        >
                         <Icon name="add-circle-outline" type="ionicon" color={colors.secondary} />
-
                     </TouchableOpacity>
                 </View>
             </View>

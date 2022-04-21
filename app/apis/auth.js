@@ -1,4 +1,6 @@
 import instance from "."
+import instance1 from "."
+import axios from 'axios'
 import { getFromStorage } from "../utils"
 
 export const signin = async (payload) => {
@@ -65,4 +67,15 @@ export const myDonationRequests = async () => {
             "authorization": await getFromStorage("token")
         }
     })
+}
+
+export const fetchNgos = async () => {
+    return await axios.get("https://bds-ngo.herokuapp.com/api/ngos")
+}
+
+
+export const addMember = async (payload) => {
+    return  await axios.put("https://bds-ngo.herokuapp.com/api/ngo/new-member", payload, 
+    )
+    
 }
