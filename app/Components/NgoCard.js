@@ -1,25 +1,25 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements';
 import colors from '../config/colors'
 import { addMember } from '../apis/auth';
-import {me} from  '../apis/auth';
+import { me } from '../apis/auth';
 
-export default function locationCard(requestData,navigation) {
+export default function locationCard(requestData, navigation) {
     const [currentUser, setCurrentUser] = useState({})
     const fetchCurrentUser = async () => {
         try {
-          const res = await me()
-          setCurrentUser(res.data.user,
-          )
-          //console.log(currentUser)
-    
-        } catch (error) {
-          console.log("error", error)
-        }
-      }
+            const res = await me()
+            setCurrentUser(res.data.user,
+            )
+            //console.log(currentUser)
 
-      const addUser=async () => {
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
+    const addUser = async () => {
         try {
             // console.log(requestData.requestData._id)
             // console.log(currentUser)
@@ -29,14 +29,14 @@ export default function locationCard(requestData,navigation) {
         } catch (error) {
             console.log(error)
         }
-     }
+    }
 
 
-      useEffect(() => {
+    useEffect(() => {
         // addUser()
         fetchCurrentUser()
-    
-      }, [])
+
+    }, [])
 
 
 
@@ -48,7 +48,7 @@ export default function locationCard(requestData,navigation) {
                 <Text style={styles.locationText}>Location</Text>
                 <View style={styles.location}>
                     <Text style={styles.city}>
-                       { requestData.location}
+                        Lahore
                     </Text>
                     <Text>
                         <Icon name="location" type="ionicon" color={colors.secondary} />
@@ -63,7 +63,7 @@ export default function locationCard(requestData,navigation) {
                         </Text>
                     </Text>
                     <TouchableOpacity style={{ alignSelf: "center" }} onPress={addUser}
-                        >
+                    >
                         <Icon name="add-circle-outline" type="ionicon" color={colors.secondary} />
                     </TouchableOpacity>
                 </View>
